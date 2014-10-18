@@ -39,4 +39,12 @@ public class Row<T> {
     public void setData(List<T> data) {
         this.data = data;
     }
+
+    public void add(T val){
+        data.add(val);
+    }
+
+    public String toString(){
+        return data.toString();
+    }
 }
