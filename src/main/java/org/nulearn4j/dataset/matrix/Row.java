@@ -28,6 +28,10 @@ public class Row<T> {
         return data.get(i);
     }
 
+    public void set(int i, T val){
+        data.set(i, val);
+    }
+
     public int size() {
         return data.size();
     }

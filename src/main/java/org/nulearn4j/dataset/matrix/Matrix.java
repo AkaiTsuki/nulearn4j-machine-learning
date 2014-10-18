@@ -55,8 +55,30 @@ public interface Matrix<T> {
     T get(int row, int col);
 
     /**
+     * Set the given position with given value
+     * @param row row index
+     * @param col column index
+     */
+    void set(int row, int col, T val);
+
+    /**
      * Add a row
      * @param row
      */
     void add(Row<T> row);
+
+    /**
+     * Remove the given column
+     * @param col column index
+     * @return a new matrix
+     */
+    Matrix<T> removeColumn(int col);
+
+    /**
+     * Add a new column at given column with the value
+     * @param col column index
+     * @param val the value for each element in new column
+     * @return new matrix that has the new column
+     */
+    Matrix<T> addColumn(int col, T val);
 }

@@ -7,7 +7,6 @@ import org.nulearn4j.dataset.matrix.Row;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.Arrays;
 
 /**
  * Created by jiachiliu on 10/17/14.
@@ -15,20 +14,18 @@ import java.util.Arrays;
 public class DatasetLoader {
     public static class DoubleMatrixParser {
 
-        public Matrix<Double> parse(File f, String delimeter) throws Exception {
+        public Matrix<Double> parse(File f, String delimiter) throws Exception {
             BufferedReader br = null;
             Matrix<Double> matrix = new DoubleMatrix();
             try {
                 br = new BufferedReader(new FileReader(f));
                 String line;
                 while ((line = br.readLine()) != null) {
-                    Row<Double> row = parseRow(line, delimeter);
+                    Row<Double> row = parseRow(line, delimiter);
                     if (row.size() > 0) {
                         matrix.add(row);
                     }
                 }
-            } catch (Exception e) {
-                throw e;
             } finally {
                 if (br != null) {
                     br.close();

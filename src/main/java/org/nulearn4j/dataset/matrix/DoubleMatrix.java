@@ -1,6 +1,7 @@
 package org.nulearn4j.dataset.matrix;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,7 @@ public class DoubleMatrix implements Matrix<Double> {
 
     private List<Row<Double>> matrix;
 
-    public DoubleMatrix(){
+    public DoubleMatrix() {
         matrix = new ArrayList<>();
     }
 
@@ -55,8 +56,48 @@ public class DoubleMatrix implements Matrix<Double> {
     }
 
     @Override
+    public void set(int row, int col, Double val) {
+        Row<Double> r = getRow(row);
+        r.set(col, val);
+    }
+
+    @Override
     public void add(Row<Double> row) {
         matrix.add(row);
+    }
+
+    @Override
+    public Matrix<Double> removeColumn(int col) {
+        Matrix<Double> newMatrix = new DoubleMatrix();
+        for (Row<Double> row : matrix) {
+            Row<Double> newRow = new Row<>();
+            for (int i = 0; i < row.size(); i++) {
+                if (i == col) continue;
+                newRow.add(row.get(i));
+            }
+            newMatrix.add(newRow);
+        }
+        return newMatrix;
+    }
+
+    @Override
+    public Matrix<Double> addColumn(int col, Double val) {
+        Matrix<Double> newMatrix = new DoubleMatrix();
+        for (Row<Double> row : matrix) {
+            Row<Double> newRow = new Row<>();
+            boolean added = false;
+            for (int i = 0; i < row.size(); i++) {
+                if (i == col && !added) {
+                    newRow.add(val);
+                    i--;
+                    added = true;
+                } else {
+                    newRow.add(row.get(i));
+                }
+            }
+            newMatrix.add(newRow);
+        }
+        return newMatrix;
     }
 
     public String toString() {
