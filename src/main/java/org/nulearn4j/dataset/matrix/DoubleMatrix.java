@@ -1,7 +1,6 @@
 package org.nulearn4j.dataset.matrix;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,10 +9,10 @@ import java.util.stream.Collectors;
  */
 public class DoubleMatrix implements Matrix<Double> {
 
-    private List<Row<Double>> matrix;
+    private List<Row<Double>> rows;
 
     public DoubleMatrix() {
-        matrix = new ArrayList<>();
+        rows = new ArrayList<>();
     }
 
     @Override
@@ -28,31 +27,31 @@ public class DoubleMatrix implements Matrix<Double> {
 
     @Override
     public List<Double> getColumn(int i) {
-        return matrix.stream().map(row -> row.get(i)).collect(Collectors.toList());
+        return rows.stream().map(row -> row.get(i)).collect(Collectors.toList());
     }
 
     @Override
     public Row<Double> getRow(int i) {
-        return matrix.get(i);
+        return rows.get(i);
     }
 
-    public List<Row<Double>> getMatrix() {
-        return matrix;
+    public List<Row<Double>> getRows() {
+        return rows;
     }
 
     @Override
     public int getColumnCount() {
-        return matrix.get(0).size();
+        return rows.get(0).size();
     }
 
     @Override
     public int getRowCount() {
-        return matrix.size();
+        return rows.size();
     }
 
     @Override
     public Double get(int row, int col) {
-        return matrix.get(row).get(col);
+        return rows.get(row).get(col);
     }
 
     @Override
@@ -63,13 +62,13 @@ public class DoubleMatrix implements Matrix<Double> {
 
     @Override
     public void add(Row<Double> row) {
-        matrix.add(row);
+        rows.add(row);
     }
 
     @Override
     public Matrix<Double> removeColumn(int col) {
         Matrix<Double> newMatrix = new DoubleMatrix();
-        for (Row<Double> row : matrix) {
+        for (Row<Double> row : rows) {
             Row<Double> newRow = new Row<>();
             for (int i = 0; i < row.size(); i++) {
                 if (i == col) continue;
@@ -83,7 +82,7 @@ public class DoubleMatrix implements Matrix<Double> {
     @Override
     public Matrix<Double> addColumn(int col, Double val) {
         Matrix<Double> newMatrix = new DoubleMatrix();
-        for (Row<Double> row : matrix) {
+        for (Row<Double> row : rows) {
             Row<Double> newRow = new Row<>();
             boolean added = false;
             for (int i = 0; i < row.size(); i++) {
@@ -101,6 +100,6 @@ public class DoubleMatrix implements Matrix<Double> {
     }
 
     public String toString() {
-        return matrix.stream().map(Object::toString).collect(Collectors.joining("\n"));
+        return rows.stream().map(Object::toString).collect(Collectors.joining("\n"));
     }
 }

@@ -66,7 +66,7 @@ public class LinearRegression {
     }
 
     public List<Double> predict(Matrix<Double> test) {
-        return test.getMatrix()
+        return test.getRows()
                 .stream()
                 .map(this::predict)
                 .collect(Collectors.toList());
@@ -87,7 +87,7 @@ public class LinearRegression {
         List<Double> trainTarget = train.getColumn(label);
         train = train.removeColumn(label);
         Normalization<Double> normalization = new ZeroMeanUnitVar();
-        normalization.setUpMeanAndVariance(train);
+        normalization.setUpMeanAndStd(train);
         normalization.normalize(train);
         train = train.addColumn(0, 1.0);
 

@@ -7,7 +7,6 @@ import java.util.List;
  */
 public interface Matrix<T> {
     /**
-     *
      * @return the dimension of matrix in a array
      * the first element is the number of rows
      * the second element is the number of columns
@@ -16,6 +15,7 @@ public interface Matrix<T> {
 
     /**
      * Return all values in given column
+     *
      * @param i the index of column
      * @return a list of values in given column
      */
@@ -23,31 +23,30 @@ public interface Matrix<T> {
 
     /**
      * Return a row on the given row index
+     *
      * @param i row index
      * @return Row
      */
     Row<T> getRow(int i);
 
     /**
-     * get the underlying matrix
+     * get all the rows in matrix
+     *
      * @return a list of Rows
      */
-    List<Row<T>> getMatrix();
+    List<Row<T>> getRows();
 
     /**
-     *
      * @return number of columns in matrix
      */
     int getColumnCount();
 
     /**
-     *
      * @return number of rows in matrix
      */
     int getRowCount();
 
     /**
-     *
      * @param row row index
      * @param col column index
      * @return the value under the given row and column
@@ -56,6 +55,7 @@ public interface Matrix<T> {
 
     /**
      * Set the given position with given value
+     *
      * @param row row index
      * @param col column index
      */
@@ -63,12 +63,14 @@ public interface Matrix<T> {
 
     /**
      * Add a row
+     *
      * @param row
      */
     void add(Row<T> row);
 
     /**
      * Remove the given column
+     *
      * @param col column index
      * @return a new matrix
      */
@@ -76,6 +78,7 @@ public interface Matrix<T> {
 
     /**
      * Add a new column at given column with the value
+     *
      * @param col column index
      * @param val the value for each element in new column
      * @return new matrix that has the new column
