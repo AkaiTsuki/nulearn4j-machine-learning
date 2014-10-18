@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad5ad2cb-1590-4c8a-888a-6b7fa25061af" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/linear/LogisticRegression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/loader/DatasetLoader.java" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/loader/DatasetLoader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/matrix/DoubleMatrix.java" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/matrix/DoubleMatrix.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/nulearn4j/linear/LinearRegression.java" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/linear/LinearRegression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/matrix/Matrix.java" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/matrix/Matrix.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/matrix/Row.java" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/matrix/Row.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/validation/Validation.java" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/validation/Validation.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nulearn4j.iws" />
@@ -1043,7 +1036,7 @@
       <workItem from="1413596508877" duration="1487000" />
       <workItem from="1413598015648" duration="7139000" />
       <workItem from="1413646367882" duration="5520000" />
-      <workItem from="1413657310518" duration="6867000" />
+      <workItem from="1413657310518" duration="6941000" />
     </task>
     <task id="LOCAL-00001" summary="Create basic data structure to save matrix dataset.&#10;Create dataset loader to load data from file.">
       <created>1413600108121</created>
@@ -1065,11 +1058,15 @@
       <created>1413657761374</created>
       <updated>1413657761374</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="1. Implemented logistic regression.&#10;2. Implemented Confusion Matrix.&#10;3. Added new dataset Spambase.&#10;4. Added split and shuffle method in Matrix">
+      <created>1413664499188</created>
+      <updated>1413664499188</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21942000" />
+    <option name="totallyTimeSpent" value="22016000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="823" extended-state="6" />
@@ -1124,7 +1121,8 @@
     <MESSAGE value="1. Implemented zero mean unit variance normalization.&#10;2. Finished Linear Regression on boston housing dataset (test mse: 21)&#10;3. Implemented validation to calculate MSE.&#10;4. Added some handy method to set and get value in matrix." />
     <MESSAGE value="Added readme file" />
     <MESSAGE value="Re-designed Matrix api" />
-    <option name="LAST_COMMIT_MESSAGE" value="Re-designed Matrix api" />
+    <MESSAGE value="1. Implemented logistic regression.&#10;2. Implemented Confusion Matrix.&#10;3. Added new dataset Spambase.&#10;4. Added split and shuffle method in Matrix" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. Implemented logistic regression.&#10;2. Implemented Confusion Matrix.&#10;3. Added new dataset Spambase.&#10;4. Added split and shuffle method in Matrix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
