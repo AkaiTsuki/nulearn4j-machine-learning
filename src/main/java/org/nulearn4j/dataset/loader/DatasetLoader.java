@@ -44,7 +44,6 @@ public class DatasetLoader {
         }
     }
 
-
     public static Matrix<Double> loadBostonHousingTrain(String regex) throws Exception {
         String path = "data/housing_train.txt";
         ResourceFileReader reader = new ResourceFileReader();
@@ -55,6 +54,14 @@ public class DatasetLoader {
 
     public static Matrix<Double> loadBostonHousingTest(String regex) throws Exception {
         String path = "data/housing_test.txt";
+        ResourceFileReader reader = new ResourceFileReader();
+        File f = reader.read(path);
+        DoubleMatrixParser parser = new DoubleMatrixParser();
+        return parser.parse(f, regex);
+    }
+
+    public static Matrix<Double> loadSpambase(String regex) throws Exception{
+        String path = "data/spambase.data";
         ResourceFileReader reader = new ResourceFileReader();
         File f = reader.read(path);
         DoubleMatrixParser parser = new DoubleMatrixParser();

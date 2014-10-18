@@ -84,4 +84,17 @@ public interface Matrix<T> {
      * @return new matrix that has the new column
      */
     Matrix<T> addColumn(int col, T val);
+
+    /**
+     * shuffle all the rows in matrix
+     */
+    void shuffle();
+
+    /**
+     * Split the matrix into to smaller matrix
+     *
+     * @param rowIndex the row index
+     * @return two matrices that one is [, rowIndex) and another is [rowIndex, )
+     */
+    Matrix<T>[] split(int rowIndex);
 }

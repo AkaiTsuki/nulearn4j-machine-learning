@@ -28,12 +28,16 @@ public class Row<T> {
         return data.get(i);
     }
 
-    public void set(int i, T val){
+    public void set(int i, T val) {
         data.set(i, val);
     }
 
     public int size() {
         return data.size();
+    }
+
+    public Stream<T> stream() {
+        return data.stream();
     }
 
     public List<T> getData() {
@@ -44,11 +48,11 @@ public class Row<T> {
         this.data = data;
     }
 
-    public void add(T val){
+    public void add(T val) {
         data.add(val);
     }
 
-    public String toString(){
+    public String toString() {
         return data.toString();
     }
 }

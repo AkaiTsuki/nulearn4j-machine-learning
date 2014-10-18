@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
  */
 public class LinearRegression {
 
-    private double[] weights;
-    private double learning_rate;
-    private double converged;
-    private double maxIteration;
+    protected double[] weights;
+    protected double learning_rate;
+    protected double converged;
+    protected double maxIteration;
 
     public LinearRegression(double learning_rate, double converged, double maxIteration) {
         this.learning_rate = learning_rate;
@@ -46,9 +46,9 @@ public class LinearRegression {
             for (int i = 0; i < m; i++) {
                 Row<Double> row = train.getRow(i);
                 Double t = target.get(i);
-                double error = predict(row) - t;
+                Double predict = predict(row);
                 for (int j = 0; j < n; j++) {
-                    weights[j] -= learning_rate * error * row.get(j);
+                    weights[j] -= delta(predict, t, row.get(j));
                 }
             }
 
@@ -63,6 +63,10 @@ public class LinearRegression {
         }
 
         return this;
+    }
+
+    protected double delta(double predict, double actual, double x){
+        return learning_rate * (predict - actual) * x;
     }
 
     public List<Double> predict(Matrix<Double> test) {
@@ -102,7 +106,6 @@ public class LinearRegression {
         List<Double> predicts = classifier.predict(test);
         double mse = Validation.mse(predicts, testTarget);
         System.out.println("Test MSE: " + mse);
-
 
     }
 }

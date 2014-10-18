@@ -1,6 +1,7 @@
 package org.nulearn4j.dataset.matrix;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,10 @@ public class DoubleMatrix implements Matrix<Double> {
 
     public DoubleMatrix() {
         rows = new ArrayList<>();
+    }
+
+    public DoubleMatrix(List<Row<Double>> rows) {
+        this.rows = rows;
     }
 
     @Override
@@ -97,6 +102,21 @@ public class DoubleMatrix implements Matrix<Double> {
             newMatrix.add(newRow);
         }
         return newMatrix;
+    }
+
+    @Override
+    public void shuffle() {
+        Collections.shuffle(rows);
+    }
+
+    @Override
+    public Matrix<Double>[] split(int rowIndex) {
+        Matrix<Double>[] splits = new DoubleMatrix[2];
+
+        splits[0] = new DoubleMatrix(rows.subList(0, rowIndex));
+        splits[1] = new DoubleMatrix(rows.subList(rowIndex, rows.size()));
+
+        return splits;
     }
 
     public String toString() {
