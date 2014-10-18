@@ -20,6 +20,12 @@ public class Row<T> {
         this.data = data;
     }
 
+    public Row(Row<T> row) {
+        data = new ArrayList<>();
+        for (int i = 0; i < row.size(); i++)
+            data.add(row.get(i));
+    }
+
     public Row(T[] data) {
         this.data = Stream.of(data).collect(Collectors.toList());
     }

@@ -6,6 +6,7 @@ import org.nulearn4j.dataset.matrix.Row;
 import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
 import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
 import org.nulearn4j.dataset.validation.Validation;
+import org.nulearn4j.dataset.validation.Validation.ConfusionMatrix;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,26 +16,12 @@ import java.util.stream.Collectors;
  */
 public class LogisticRegression extends LinearRegression {
 
-    public LogisticRegression(){
+    public LogisticRegression() {
         super();
     }
 
-    public LogisticRegression(double learning_rate, double converged, double maxIteration){
+    public LogisticRegression(double learning_rate, double converged, double maxIteration) {
         super(learning_rate, converged, maxIteration);
-    }
-
-    @Override
-    protected double delta(double predict, double actual, double x) {
-        return learning_rate * (predict - actual) * predict * (1.0 - predict) * x;
-    }
-
-    @Override
-    public Double predict(Row<Double> row) {
-        return sigmoid(super.predict(row));
-    }
-
-    private Double sigmoid(double val) {
-        return 1.0 / (1 + Math.exp(-val));
     }
 
     public List<Double> predictToBinary(Matrix<Double> test, double threshold) {
@@ -46,7 +33,47 @@ public class LogisticRegression extends LinearRegression {
         }).collect(Collectors.toList());
     }
 
-    public static void main(String[] args) throws Exception{
+    @Override
+    public Double predict(Row<Double> row) {
+        return sigmoid(super.predict(row));
+    }
+
+    @Override
+    protected double delta(double predict, double actual, double x) {
+        return learning_rate * (predict - actual) * predict * (1.0 - predict) * x;
+    }
+
+    private Double sigmoid(double val) {
+        return 1.0 / (1 + Math.exp(-val));
+    }
+
+    public static void main(String[] args) throws Exception {
+        kfold();
+    }
+
+    public static void kfold() throws Exception {
+        Matrix<Double> spambase = DatasetLoader.loadSpambase(",");
+        // Shuffle the data since it put all spam at the head fo file.
+        spambase.shuffle();
+
+        int k = 10;
+
+        double accuracy = 0.0;
+        double error = 0.0;
+
+        for (int i = 0; i < k; i++) {
+            System.out.println("\n============== Fold "+ i +"=================");
+            Matrix<Double> train = spambase.kFoldTrain(k, i);
+            Matrix<Double> test = spambase.kFoldTest(k, i);
+            ConfusionMatrix cm = run(test, train);
+            accuracy += cm.accuracy();
+            error += cm.error();
+        }
+
+        System.out.println("Average Accuracy: "+accuracy/k + " Average error: "+ error/k);
+    }
+
+    public static void randomSplit() throws Exception {
         Matrix<Double> spambase = DatasetLoader.loadSpambase(",");
         // Shuffle the data since it put all spam at the head fo file.
         spambase.shuffle();
@@ -55,6 +82,10 @@ public class LogisticRegression extends LinearRegression {
         Matrix<Double> test = splits[0];
         Matrix<Double> train = splits[1];
 
+        run(test, train);
+    }
+
+    private static ConfusionMatrix run(Matrix<Double> test, Matrix<Double> train) {
         int label = train.getColumnCount() - 1;
         List<Double> trainTarget = train.getColumn(label);
         List<Double> testTarget = test.getColumn(label);
@@ -69,9 +100,11 @@ public class LogisticRegression extends LinearRegression {
         norm.normalize(test);
         test.addColumn(0, 1.0);
 
-        LogisticRegression classifer = new LogisticRegression(0.001, 0.0001, 100);
-        classifer.fit(train, trainTarget);
-        List<Double> predictLabels = classifer.predictToBinary(test, 0.5);
-        System.out.println(Validation.confusionMatrix(predictLabels,testTarget));
+        LogisticRegression classifier = new LogisticRegression(0.001, 0.0001, 100);
+        classifier.fit(train, trainTarget);
+        List<Double> predictLabels = classifier.predictToBinary(test, 0.5);
+        ConfusionMatrix cm = Validation.confusionMatrix(predictLabels, testTarget);
+        System.out.println(cm);
+        return cm;
     }
 }

@@ -69,6 +69,13 @@ public interface Matrix<T> {
     void add(Row<T> row);
 
     /**
+     * Add all given rows into end of matrix
+     *
+     * @param rows a list of rows
+     */
+    void addAll(List<Row<T>> rows);
+
+    /**
      * Remove the given column
      *
      * @param col column index
@@ -97,4 +104,20 @@ public interface Matrix<T> {
      * @return two matrices that one is [, rowIndex) and another is [rowIndex, )
      */
     Matrix<T>[] split(int rowIndex);
+
+    /**
+     * @param folds total number of folds
+     * @param n     the current fold that will choose as test
+     * @return a new matrix that contains rows not in this fold
+     */
+    Matrix<T> kFoldTrain(int folds, int n);
+
+    /**
+     * @param folds total number of folds
+     * @param n     the current fold that will choose as test
+     * @return a new matrix that contains rows in this fold
+     */
+    Matrix<T> kFoldTest(int folds, int n);
+
+
 }

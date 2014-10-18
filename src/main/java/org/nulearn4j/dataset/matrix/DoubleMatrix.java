@@ -71,6 +71,11 @@ public class DoubleMatrix implements Matrix<Double> {
     }
 
     @Override
+    public void addAll(List<Row<Double>> rows) {
+        rows.addAll(rows);
+    }
+
+    @Override
     public Matrix<Double> removeColumn(int col) {
         Matrix<Double> newMatrix = new DoubleMatrix();
         for (Row<Double> row : rows) {
@@ -117,6 +122,41 @@ public class DoubleMatrix implements Matrix<Double> {
         splits[1] = new DoubleMatrix(rows.subList(rowIndex, rows.size()));
 
         return splits;
+    }
+
+    @Override
+    public Matrix<Double> kFoldTrain(int folds, int n) {
+        int numOfRowsPerFold = getRowCount() / folds;
+        int offsetStart = n * numOfRowsPerFold;
+        int offsetEnd = n * numOfRowsPerFold + numOfRowsPerFold;
+        Matrix<Double> m = new DoubleMatrix();
+
+        List<Row<Double>> left = rows.subList(0, offsetStart);
+        List<Row<Double>> right = rows.subList(offsetEnd, getRowCount());
+
+        for (Row<Double> r : left) {
+            m.add(new Row<>(r));
+        }
+
+        for (Row<Double> r : right) {
+            m.add(new Row<>(r));
+        }
+
+        return m;
+    }
+
+    @Override
+    public Matrix<Double> kFoldTest(int folds, int n) {
+        int numOfRowsPerFold = getRowCount() / folds;
+        int offsetStart = n * numOfRowsPerFold;
+        int offsetEnd = n * numOfRowsPerFold + numOfRowsPerFold;
+        List<Row<Double>> selected = rows.subList(offsetStart, offsetEnd);
+
+        Matrix<Double> m = new DoubleMatrix();
+        for (Row<Double> r : selected) {
+            m.add(new Row<>(r));
+        }
+        return m;
     }
 
     public String toString() {
