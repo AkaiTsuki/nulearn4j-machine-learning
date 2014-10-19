@@ -4,7 +4,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.nulearn4j.dataset.loader.DatasetLoader;
 import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.dataset.validation.Validation;
-import org.nulearn4j.util.Statistic.DoubleListStatistic;
+import org.nulearn4j.util.Statistic.MathUtil;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +31,7 @@ public class DecisionTree extends Cart {
         List<Double> target = matrix.getColumn(label);
         for (Double l : getUniqueLabels(matrix)) {
             long count = target.stream().filter(v -> v.equals(l)).count();
-            info += -(count / total) * DoubleListStatistic.log2((count / total));
+            info += -(count / total) * MathUtil.log2((count / total));
         }
         return info;
     }
