@@ -106,7 +106,13 @@ public interface Matrix<T> {
      */
     Matrix<T>[] split(int rowIndex);
 
-    Matrix<T> split(Predicate<Row<T>> func);
+    /**
+     * Split the matrix based on given predicate
+     *
+     * @param func a predicate function that use as filter
+     * @return a new matrix that pass the predicate.
+     */
+    Matrix<T> filter(Predicate<Row<T>> func);
 
     /**
      * @param folds total number of folds
@@ -122,5 +128,10 @@ public interface Matrix<T> {
      */
     Matrix<T> kFoldTest(int folds, int n);
 
+    /**
+     * Sort all the rows by given feature
+     *
+     * @param feature index of a feature
+     */
     void sortByFeature(int feature);
 }

@@ -126,7 +126,7 @@ public class DoubleMatrix implements Matrix<Double> {
     }
 
     @Override
-    public Matrix<Double> split(Predicate<Row<Double>> predicate) {
+    public Matrix<Double> filter(Predicate<Row<Double>> predicate) {
         List<Row<Double>> filtered = rows.stream().filter(predicate).collect(Collectors.toList());
         return new DoubleMatrix(filtered);
     }

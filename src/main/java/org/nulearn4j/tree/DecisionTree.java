@@ -1,13 +1,14 @@
 package org.nulearn4j.tree;
 
+import org.apache.log4j.BasicConfigurator;
 import org.nulearn4j.dataset.loader.DatasetLoader;
 import org.nulearn4j.dataset.matrix.Matrix;
-import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
-import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
 import org.nulearn4j.dataset.validation.Validation;
 import org.nulearn4j.util.Statistic.DoubleListStatistic;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 /**
@@ -67,7 +68,6 @@ public class DecisionTree extends Cart {
         for (int i = 1; i < target.size(); i++) {
             if (!value.equals(target.get(i))) return false;
         }
-        System.out.println("data splits has same label: " +target.get(0));
         return true;
     }
 
@@ -78,6 +78,7 @@ public class DecisionTree extends Cart {
     }
 
     public static void main(String[] args) throws Exception {
+        BasicConfigurator.configure();
         kfold();
     }
 
@@ -108,7 +109,6 @@ public class DecisionTree extends Cart {
         List<Double> testTarget = test.getColumn(label);
 
         int[] features = IntStream.range(0,train.getColumnCount()-1).toArray();
-        System.out.println(Arrays.toString(features));
         Cart classifier = new DecisionTree(features, label);
         classifier.fit(train);
         Cart.printTree(classifier.getRoot());
