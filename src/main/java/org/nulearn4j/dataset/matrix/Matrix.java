@@ -1,6 +1,7 @@
 package org.nulearn4j.dataset.matrix;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Created by jiachiliu on 10/17/14.
@@ -64,7 +65,7 @@ public interface Matrix<T> {
     /**
      * Add a row
      *
-     * @param row
+     * @param row a row
      */
     void add(Row<T> row);
 
@@ -105,6 +106,8 @@ public interface Matrix<T> {
      */
     Matrix<T>[] split(int rowIndex);
 
+    Matrix<T> split(Predicate<Row<T>> func);
+
     /**
      * @param folds total number of folds
      * @param n     the current fold that will choose as test
@@ -119,5 +122,5 @@ public interface Matrix<T> {
      */
     Matrix<T> kFoldTest(int folds, int n);
 
-
+    void sortByFeature(int feature);
 }

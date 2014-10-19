@@ -62,7 +62,7 @@ public class LogisticRegression extends LinearRegression {
         double error = 0.0;
 
         for (int i = 0; i < k; i++) {
-            System.out.println("\n============== Fold "+ i +"=================");
+            System.out.println("\n============== Fold " + i + "=================");
             Matrix<Double> train = spambase.kFoldTrain(k, i);
             Matrix<Double> test = spambase.kFoldTest(k, i);
             ConfusionMatrix cm = run(test, train);
@@ -70,7 +70,7 @@ public class LogisticRegression extends LinearRegression {
             error += cm.error();
         }
 
-        System.out.println("Average Accuracy: "+accuracy/k + " Average error: "+ error/k);
+        System.out.println("Average Accuracy: " + accuracy / k + " Average error: " + error / k);
     }
 
     public static void randomSplit() throws Exception {

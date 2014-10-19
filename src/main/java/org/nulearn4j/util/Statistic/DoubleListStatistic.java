@@ -68,4 +68,12 @@ public class DoubleListStatistic {
     public static double max(List<Double> list) {
         return list.stream().max(Double::compare).get();
     }
+
+    /**
+     * @param val a value
+     * @return the log value based on 2
+     */
+    public static double log2(double val) {
+        return Math.log(val) / Math.log(2);
+    }
 }

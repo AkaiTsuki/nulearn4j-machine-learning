@@ -3,6 +3,7 @@ package org.nulearn4j.dataset.matrix;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -125,6 +126,12 @@ public class DoubleMatrix implements Matrix<Double> {
     }
 
     @Override
+    public Matrix<Double> split(Predicate<Row<Double>> predicate) {
+        List<Row<Double>> filtered = rows.stream().filter(predicate).collect(Collectors.toList());
+        return new DoubleMatrix(filtered);
+    }
+
+    @Override
     public Matrix<Double> kFoldTrain(int folds, int n) {
         int numOfRowsPerFold = getRowCount() / folds;
         int offsetStart = n * numOfRowsPerFold;
@@ -157,6 +164,11 @@ public class DoubleMatrix implements Matrix<Double> {
             m.add(new Row<>(r));
         }
         return m;
+    }
+
+    @Override
+    public void sortByFeature(int feature) {
+        Collections.sort(rows, (r1, r2) -> r1.get(feature).compareTo(r2.get(feature)));
     }
 
     public String toString() {
