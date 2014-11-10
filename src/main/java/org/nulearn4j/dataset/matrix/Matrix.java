@@ -134,4 +134,8 @@ public interface Matrix<T> {
      * @param feature index of a feature
      */
     void sortByFeature(int feature);
+
+    T[][] to2DArray();
+
+    double[][] toPrimitive();
 }

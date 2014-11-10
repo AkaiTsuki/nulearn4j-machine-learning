@@ -171,6 +171,32 @@ public class DoubleMatrix implements Matrix<Double> {
         Collections.sort(rows, (r1, r2) -> r1.get(feature).compareTo(r2.get(feature)));
     }
 
+    @Override
+    public Double[][] to2DArray() {
+        Double[][] array = new Double[getRowCount()][getColumnCount()];
+
+        for (int i = 0; i < getRowCount(); i++) {
+            for (int j = 0; j < getColumnCount(); j++) {
+                array[i][j] = get(i, j);
+            }
+        }
+
+        return array;
+    }
+
+    @Override
+    public double[][] toPrimitive() {
+        double[][] array = new double[getRowCount()][getColumnCount()];
+
+        for (int i = 0; i < getRowCount(); i++) {
+            for (int j = 0; j < getColumnCount(); j++) {
+                array[i][j] = get(i, j);
+            }
+        }
+
+        return array;
+    }
+
     public String toString() {
         return rows.stream().map(Object::toString).collect(Collectors.joining("\n"));
     }
