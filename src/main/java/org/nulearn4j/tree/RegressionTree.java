@@ -3,7 +3,7 @@ package org.nulearn4j.tree;
 import org.apache.log4j.BasicConfigurator;
 import org.nulearn4j.dataset.loader.DatasetLoader;
 import org.nulearn4j.dataset.matrix.Matrix;
-import org.nulearn4j.dataset.validation.Validation;
+import org.nulearn4j.validation.Validation;
 import org.nulearn4j.util.Statistic.DoubleListStatistic;
 
 import java.util.List;

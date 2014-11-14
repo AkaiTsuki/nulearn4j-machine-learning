@@ -5,7 +5,7 @@ import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.dataset.matrix.Row;
 import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
 import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
-import org.nulearn4j.dataset.validation.Validation;
+import org.nulearn4j.validation.Validation;
 
 import java.util.Arrays;
 import java.util.List;

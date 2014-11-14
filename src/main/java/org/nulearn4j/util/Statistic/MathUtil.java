@@ -3,6 +3,7 @@ package org.nulearn4j.util.Statistic;
 import org.nulearn4j.dataset.matrix.Matrix;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -60,6 +61,20 @@ public class MathUtil {
         }
 
         return r;
+    }
+
+    public static List<Integer> argsort(List<Double> f, boolean reverse) {
+        int m = f.size();
+        List<Integer> args = new ArrayList<>(m);
+        for (int i = 0; i < m; i++) {
+            args.add(i);
+        }
+        if (reverse) {
+            Collections.sort(args, (a, b) -> -f.get(a).compareTo(f.get(b)));
+        } else {
+            Collections.sort(args, (a, b) -> f.get(a).compareTo(f.get(b)));
+        }
+        return args;
     }
 
 

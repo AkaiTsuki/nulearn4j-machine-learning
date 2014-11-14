@@ -3,9 +3,8 @@ package org.nulearn4j.boost;
 import org.nulearn4j.boost.learner.OptimalLearner;
 import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.dataset.matrix.Row;
-import org.nulearn4j.dataset.validation.Validation;
+import org.nulearn4j.validation.Validation;
 import org.nulearn4j.util.Statistic.MathUtil;
-import org.nulearn4j.dataset.validation.Validation;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -60,8 +59,10 @@ public class AdaBoost {
             MathUtil.add(testPredicts, testPredictVal);
             List<Double> testPredictLabels = sign(testPredicts);
             Validation.ConfusionMatrix testCM = validate(testPredictLabels, testTarget);
+            double auc = Validation.auc(Validation.roc(testTarget, testPredicts, 1.0, -1.0));
 
-            System.out.format("Round %2d, feature %d, threshold %f, round error: %f, train error: %f, test error: %f\n", round, f, t, weightedError, trainCM.error(), testCM.error());
+            System.out.format("Round %2d, feature %2d, threshold %f, round error: %f, train error: %f, test error: %f, auc: %f\n",
+                    round, f, t, weightedError, trainCM.error(), testCM.error(), auc);
             this.updateWeights(weights, trainPredict, trainTarget, weightedError);
 
             round++;

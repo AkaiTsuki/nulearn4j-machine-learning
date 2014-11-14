@@ -40,8 +40,31 @@ public class OptimalLearner {
         }
     }
 
-    private ErrorSet findBestErrorOnCache(List<Cache> c, List<Double> w) {
-        return null;
+    private ErrorSet findBestErrorOnCache(List<Cache> caches, List<Double> w) {
+        ErrorSet r = new ErrorSet();
+
+        double currentWeightedErr = 0.0;
+        for(Cache c: caches){
+            List<Integer> toAdd = c.toAdd;
+            List<Integer> toRemove = c.toRemove;
+            double currentThreshold = c.threshold;
+
+            for(Integer a: toAdd){
+                currentWeightedErr += w.get(a);
+            }
+
+            for(Integer a: toRemove){
+                currentWeightedErr -= w.get(a);
+            }
+
+            double currentAbsError = absErr(currentWeightedErr);
+            if(currentAbsError > r.error){
+                r.error = currentAbsError;
+                r.weightedError = currentWeightedErr;
+                r.threshold = currentThreshold;
+            }
+        }
+        return r;
     }
 
     private ErrorSet findBestErrorOnFeature(List<Double> f, List<Double> t, List<Double> d, int index) {
@@ -58,6 +81,11 @@ public class OptimalLearner {
         double currentAbsErr = absErr(currentWeightedErr);
         double currentThreshold = f.get(args.get(0)) - 0.5;
 
+        Cache c = new Cache(mismatch, new ArrayList<Integer>(), currentThreshold);
+        List<Cache> lc = new LinkedList<>();
+        lc.add(c);
+        this.cache.put(index, lc);
+
         ErrorSet r = new ErrorSet();
         r.error = currentAbsErr;
         r.weightedError = currentWeightedErr;
@@ -67,13 +95,17 @@ public class OptimalLearner {
         for (int i = 1; i < m + 1; i++) {
             if (i == m || !f.get(args.get(i)).equals(f.get(args.get(i - 1)))) {
                 List<Integer> toChange = new ArrayList<>();
+                List<Integer> toAdd = new LinkedList<>();
+                List<Integer> toRemove = new LinkedList<>();
                 for (int j = start; j < i; j++) {
                     toChange.add(args.get(j));
                 }
-                double delta = update(p, t, d, toChange);
+                double delta = update(p, t, d, toChange, toAdd, toRemove);
                 currentWeightedErr += delta;
                 currentAbsErr = absErr(currentWeightedErr);
                 currentThreshold = (i == m) ? f.get(args.get(m - 1)) + 0.5 : (f.get(args.get(i - 1)) + f.get(args.get(i))) / 2.0;
+                Cache currentCache = new Cache(toAdd, toRemove, currentThreshold);
+                this.cache.get(index).add(currentCache);
                 if (currentAbsErr > r.error) {
                     r.error = currentAbsErr;
                     r.weightedError = currentWeightedErr;
@@ -86,13 +118,15 @@ public class OptimalLearner {
         return r;
     }
 
-    private double update(List<Double> p, List<Double> t, List<Double> d, List<Integer> toChange) {
+    private double update(List<Double> p, List<Double> t, List<Double> d, List<Integer> toChange, List<Integer> toAdd, List<Integer> toRemove) {
         double delta = 0.0;
         for (Integer i : toChange) {
             p.set(i, -1.0);
             if (p.get(i).equals(t.get(i))) {
+                toRemove.add(i);
                 delta -= d.get(i);
             } else {
+                toAdd.add(i);
                 delta += d.get(i);
             }
         }

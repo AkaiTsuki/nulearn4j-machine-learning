@@ -5,8 +5,8 @@ import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.dataset.matrix.Row;
 import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
 import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
-import org.nulearn4j.dataset.validation.Validation;
-import org.nulearn4j.dataset.validation.Validation.ConfusionMatrix;
+import org.nulearn4j.validation.Validation;
+import org.nulearn4j.validation.Validation.ConfusionMatrix;
 
 import java.util.List;
 import java.util.stream.Collectors;
