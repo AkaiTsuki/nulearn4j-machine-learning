@@ -28,6 +28,11 @@ public class SMO {
      */
     private double b;
 
+    /**
+     * Cache to save error for data points
+     */
+    private Map<Integer, Double> errorCache = new HashMap<>();
+
     public SMO() {
     }
 
@@ -107,8 +112,7 @@ public class SMO {
         double y2 = Y.get(i2);
         List<Double> x2 = X.getRow(i2).getData();
         double a2 = as.get(i2);
-        double o2 = predictOne(x2);
-        double e2 = o2 - y2;
+        double e2 = error(i2, X, Y);
         double r2 = e2 * y2;
 
         if ((r2 < -tolerance && a2 < C) || (r2 > tolerance && a2 > 0)) {
@@ -136,18 +140,28 @@ public class SMO {
         return 0;
     }
 
+    /**
+     * Update the Lagrange Multiplier pair
+     *
+     * @param i1 index of alpha 1
+     * @param i2 index of alpha 2
+     * @param X  training set
+     * @param Y  training set label
+     * @return 1 if success updated else 0
+     * @throws Exception
+     */
     private int takeStep(int i1, int i2, Matrix<Double> X, List<Double> Y) throws Exception {
         if (i1 == i2) return 0;
 
         double a1 = as.get(i1);
         List<Double> x1 = X.getRow(i1).getData();
         double y1 = Y.get(i1);
-        double e1 = predictOne(x1) - y1;
+        double e1 = error(i1, X, Y);
 
         double a2 = as.get(i2);
         List<Double> x2 = X.getRow(i2).getData();
         double y2 = Y.get(i2);
-        double e2 = predictOne(x2) - y2;
+        double e2 = error(i2, X, Y);
 
         double s = y1 * y2;
         double L = (y1 == y2) ? Math.max(0.0, a1 + a2 - C) : Math.max(0.0, a2 - a1);
@@ -208,6 +222,22 @@ public class SMO {
     }
 
     /**
+     * Compute the error of given data point, retrieve from cache if possible
+     *
+     * @param i index of data point
+     * @param X training set
+     * @param Y training set label
+     * @return the error of the data point
+     * @throws Exception
+     */
+    private double error(int i, Matrix<Double> X, List<Double> Y) throws Exception {
+        if (!errorCache.containsKey(i)) {
+            errorCache.put(i, predictOne(X.getRow(i).getData()) - Y.get(i));
+        }
+        return errorCache.get(i);
+    }
+
+    /**
      * Update weights using current optimization alpha_i and alpha_j
      *
      * @param x1      data point 1
@@ -220,6 +250,7 @@ public class SMO {
     private void updateWeightsOpt(List<Double> x1, double y1, double deltaA1, List<Double> x2, double y2, double deltaA2) {
         MathUtil.add(ws, MathUtil.multiply(x1, y1 * deltaA1));
         MathUtil.add(ws, MathUtil.multiply(x2, y2 * deltaA2));
+        errorCache.clear();
     }
 
     /**
