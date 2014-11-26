@@ -1,6 +1,8 @@
 package org.nulearn4j.svm;
 
 import org.nulearn4j.dataset.matrix.Matrix;
+import org.nulearn4j.svm.kernel.Kernel;
+import org.nulearn4j.svm.kernel.LinearKernel;
 import org.nulearn4j.util.Statistic.MathUtil;
 
 import java.util.*;
@@ -32,6 +34,8 @@ public class SMO {
      * Cache to save error for data points
      */
     private Map<Integer, Double> errorCache = new HashMap<>();
+
+    private Kernel kernel;
 
     public SMO() {
     }
@@ -88,7 +92,8 @@ public class SMO {
                     }
                 }
             }
-            System.out.format("iteration %3d, number of changes: %d\n", loop, numOfChanged);
+
+            System.out.format("iteration %3d, number of changes: %d, kernel cache miss: %f\n", loop, numOfChanged, kernel.missRate());
             if (examineAll)
                 examineAll = false;
             else if (numOfChanged == 0) {
@@ -170,9 +175,9 @@ public class SMO {
             return 0;
         }
 
-        double k11 = kernel(x1, x1);
-        double k22 = kernel(x2, x2);
-        double k12 = kernel(x1, x2);
+        double k11 = kernel.transform(x1, x1, i1, i1);
+        double k22 = kernel.transform(x2, x2, i2, i2);
+        double k12 = kernel.transform(x1, x2, i1, i2);
         double eta = k11 + k22 - 2 * k12;
         double a2New;
         if (eta <= 0) {
@@ -254,18 +259,6 @@ public class SMO {
     }
 
     /**
-     * Linear kernel
-     *
-     * @param r1 data point
-     * @param r2 data point
-     * @return dot product
-     * @throws Exception
-     */
-    private double kernel(List<Double> r1, List<Double> r2) throws Exception {
-        return MathUtil.dot(r1, r2);
-    }
-
-    /**
      * Find best alpha_j based on error.
      *
      * @param e2      error of alpha_i
@@ -335,6 +328,7 @@ public class SMO {
         as = MathUtil.zeros(m);
         ws = MathUtil.zeros(n);
         b = 0.0;
+        kernel = new LinearKernel(m);
     }
 
 }
