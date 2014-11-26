@@ -50,14 +50,14 @@ public class AdaBoost {
             List<Double> trainPredict = this.hypothesis(train, f, t);
             List<Double> trainPredictVal = MathUtil.multiply(trainPredict, confidence);
             MathUtil.add(trainPredicts, trainPredictVal);
-            List<Double> trainPredictLabels = sign(trainPredicts);
+            List<Double> trainPredictLabels = sign(trainPredicts, -1.0);
             Validation.ConfusionMatrix trainCM = validate(trainPredictLabels, trainTarget);
 
             // Predict on test data
             List<Double> testPredict = this.hypothesis(test, f, t);
             List<Double> testPredictVal = MathUtil.multiply(testPredict, confidence);
             MathUtil.add(testPredicts, testPredictVal);
-            List<Double> testPredictLabels = sign(testPredicts);
+            List<Double> testPredictLabels = sign(testPredicts, -1.0);
             Validation.ConfusionMatrix testCM = validate(testPredictLabels, testTarget);
             double auc = Validation.auc(Validation.roc(testTarget, testPredicts, 1.0, -1.0));
 
@@ -73,11 +73,11 @@ public class AdaBoost {
         return Validation.confusionMatrix(predictLabels, actualLabels);
     }
 
-    public List<Double> sign(List<Double> vals) {
+    public List<Double> sign(List<Double> vals, double negative) {
         List<Double> s = new ArrayList<>(vals.size());
 
         for (Double d : vals) {
-            if (d <= 0) s.add(-1.0);
+            if (d <= 0) s.add(negative);
             else s.add(1.0);
         }
         return s;
@@ -116,6 +116,21 @@ public class AdaBoost {
             else
                 predicts.add(1.0);
         }
+        return predicts;
+    }
+
+    public List<Double> predict(Matrix<Double> data) {
+        List<Double> predicts = new ArrayList<>(data.getRowCount());
+
+        for (Row<Double> r : data.getRows()) {
+            double predictVal = 0.0;
+            for (RoundResult stump : this.weakLearners) {
+                double p = (r.get(stump.feature) <= stump.threshold) ? -1.0 : 1.0;
+                predictVal += stump.confidence * p;
+            }
+            predicts.add(predictVal);
+        }
+
         return predicts;
     }
 

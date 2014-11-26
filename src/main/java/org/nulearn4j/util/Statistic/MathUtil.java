@@ -1,10 +1,12 @@
 package org.nulearn4j.util.Statistic;
 
 import org.nulearn4j.dataset.matrix.Matrix;
+import org.nulearn4j.dataset.matrix.Row;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by jiachiliu on 10/19/14.
@@ -53,6 +55,24 @@ public class MathUtil {
         return l;
     }
 
+    public static List<Double> rand(int m) {
+        Random rand = new Random();
+        List<Double> l = new ArrayList<>(m);
+        for (int i = 0; i < m; i++) {
+            l.add(rand.nextDouble());
+        }
+        return l;
+    }
+
+    public static List<Integer> range(int s, int e) {
+        List<Integer> l = new ArrayList<>(e - s);
+
+        for (int i = s; i < e; i++) {
+            l.add(i);
+        }
+        return l;
+    }
+
     public static List<Double> multiply(List<Double> vector, double scalar) {
         List<Double> r = new ArrayList<>(vector.size());
 
@@ -75,6 +95,22 @@ public class MathUtil {
             Collections.sort(args, (a, b) -> f.get(a).compareTo(f.get(b)));
         }
         return args;
+    }
+
+    public static double dot(Row<Double> r1, Row<Double> r2) throws Exception {
+        return dot(r1.getData(), r2.getData());
+    }
+
+    public static double dot(List<Double> r1, List<Double> r2) throws Exception {
+        if (r1.size() != r2.size()) {
+            throw new Exception("Dimension disagree");
+        }
+
+        double sum = 0.0;
+        for (int i = 0; i < r1.size(); i++) {
+            sum += r1.get(i) * r2.get(i);
+        }
+        return sum;
     }
 
 

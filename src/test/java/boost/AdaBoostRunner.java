@@ -56,7 +56,7 @@ public class AdaBoostRunner {
     }
 
     public static void main(String[] args) throws Exception {
-//        spambase();
-        polluteSpam();
+        spambase();
+//        polluteSpam();
     }
 }
