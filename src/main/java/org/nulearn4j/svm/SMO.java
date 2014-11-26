@@ -12,7 +12,7 @@ public class SMO {
     private double C = 0.05;
     private double eps = 0.001;
     private double tolerance = 0.001;
-
+    private int maxLoop = 500;
     /**
      * Linear Weights
      */
@@ -70,7 +70,6 @@ public class SMO {
         initParameters(m, n);
 
         while (numOfChanged > 0 || examineAll) {
-            loop++;
             numOfChanged = 0;
             if (examineAll) {
                 for (int i = 0; i < m; i++) {
@@ -89,9 +88,8 @@ public class SMO {
             else if (numOfChanged == 0) {
                 examineAll = true;
             }
-
-            if (loop > 500) break;
-//            if(numOfChanged < 5) break;
+            loop++;
+            if (loop > maxLoop) break;
         }
     }
 
