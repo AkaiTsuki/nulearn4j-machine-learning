@@ -52,6 +52,13 @@ public class SMO {
         return l;
     }
 
+    /**
+     * Fit the training set to get optimization weights
+     *
+     * @param X training set
+     * @param Y training set label
+     * @throws Exception
+     */
     public void fit(Matrix<Double> X, List<Double> Y) throws Exception {
         int m = X.getRowCount();
         int n = X.getColumnCount();
@@ -91,10 +98,10 @@ public class SMO {
     /**
      * Heuristically choosing second Lagrange multipliers and update the chosen pair
      *
-     * @param i2
-     * @param X
-     * @param Y
-     * @return
+     * @param i2 index of first alpha
+     * @param X  training set
+     * @param Y  training set label
+     * @return number of updated alphas.
      * @throws Exception
      */
     private int examineExample(int i2, Matrix<Double> X, List<Double> Y) throws Exception {
