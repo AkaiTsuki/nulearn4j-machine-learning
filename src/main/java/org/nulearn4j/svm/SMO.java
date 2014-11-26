@@ -12,7 +12,7 @@ public class SMO {
     private double C = 0.05;
     private double eps = 0.001;
     private double tolerance = 0.001;
-    private int maxLoop = 500;
+    private int maxLoop = 50;
     /**
      * Linear Weights
      */
@@ -31,10 +31,11 @@ public class SMO {
     public SMO() {
     }
 
-    public SMO(double c, double eps, double tolerance) {
+    public SMO(double c, double eps, double tolerance, int maxLoop) {
         this.C = c;
         this.eps = eps;
         this.tolerance = tolerance;
+        this.maxLoop = maxLoop;
     }
 
     public List<Double> predictToLabel(Matrix<Double> X) throws Exception {
@@ -82,7 +83,7 @@ public class SMO {
                     }
                 }
             }
-            System.out.format("iteration %d, number of changes: %d\n", loop, numOfChanged);
+            System.out.format("iteration %3d, number of changes: %d\n", loop, numOfChanged);
             if (examineAll)
                 examineAll = false;
             else if (numOfChanged == 0) {
