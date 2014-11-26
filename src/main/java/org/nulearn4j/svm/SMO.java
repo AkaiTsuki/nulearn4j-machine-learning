@@ -22,6 +22,10 @@ public class SMO {
      * Lagrange multipliers
      */
     private List<Double> as;
+
+    /**
+     * Threshold
+     */
     private double b;
 
     public SMO() {
@@ -102,34 +106,27 @@ public class SMO {
         double r2 = e2 * y2;
 
         if ((r2 < -tolerance && a2 < C) || (r2 > tolerance && a2 > 0)) {
-//        if(violateKKT(a2,o2, y2)){
             List<Integer> indices = getSupportVectorMultipliers();
 
             // find the best second multiplier
             if (indices.size() > 1) {
-                int i1 = findMultiplierHeuristic(e2, i2, X, Y, indices);
+                int i1 = findMultiplierHeuristic(e2, X, Y, indices);
                 if (takeStep(i1, i2, X, Y) > 0) return 1;
             }
 
-            // fail to find best multiplier, loop through all support vectors
+            // fail to find best multiplier, loop through all support vectors, start at random position
             Collections.shuffle(indices);
             for (int i = 0; i < indices.size(); i++) {
                 if (takeStep(i, i2, X, Y) > 0) return 1;
             }
 
-            // fail to find support vectors, loop through all train data
+            // fail to find support vectors, loop through all train data, start at random position
             List<Integer> xIndices = MathUtil.range(0, X.getRowCount());
-//            Collections.shuffle(xIndices);
-            Set<Integer> set = new HashSet<>(indices);
-            for (int i = 0; i < xIndices.size(); i++) {
-                int i1 = xIndices.get(i);
+            Collections.shuffle(xIndices);
+            for (Integer i1 : xIndices) {
                 if (takeStep(i1, i2, X, Y) > 0) return 1;
-//                if (!set.contains(i1)) {
-//                    if (takeStep(i1, i2, X, Y) > 0) return 1;
-//                }
             }
         }
-
         return 0;
     }
 
@@ -159,6 +156,7 @@ public class SMO {
         double eta = k11 + k22 - 2 * k12;
         double a2New;
         if (eta <= 0) {
+            // Optional: can update or just return when eta <= 0
             double f1 = y1 * (e1 + b) - a1 * k11 - s * a2 * k12;
             double f2 = y2 * (e2 + b) - s * a1 * k12 - a2 * k22;
             double L1 = a1 + s * (a2 - L);
@@ -171,10 +169,12 @@ public class SMO {
                 a2New = H;
             else
                 a2New = a2;
+//            Or just return 0 to ignore this pair
+//            return 0;
         } else {
             a2New = a2 + y2 * (e1 - e2) / eta;
         }
-
+        // chip
         if (a2New < L) a2New = L;
         else if (a2New > H) a2New = H;
 
@@ -197,36 +197,48 @@ public class SMO {
 
         as.set(i1, a1New);
         as.set(i2, a2New);
-//        updateWeights(X, Y);
         updateWeightsOpt(x1, y1, a1New - a1, x2, y2, a2New - a2);
         return 1;
     }
 
-
-    private void updateWeights(Matrix<Double> X, List<Double> Y) {
-        List<Double> w = MathUtil.zeros(ws.size());
-        for (int i = 0; i < X.getRowCount(); i++) {
-            if (isSupportVector(as.get(i))) {
-                List<Double> x = X.getRow(i).getData();
-                double a = as.get(i);
-                double y = Y.get(i);
-                MathUtil.add(w, MathUtil.multiply(x, a * y));
-            }
-        }
-        ws = w;
-    }
-
+    /**
+     * Update weights using current optimization alpha_i and alpha_j
+     *
+     * @param x1      data point 1
+     * @param y1      data point label 1
+     * @param deltaA1 difference of new alpha_i and old alpha_i
+     * @param x2      data point 2
+     * @param y2      data point label 2
+     * @param deltaA2 difference of new alpha_j and old alpha_j
+     */
     private void updateWeightsOpt(List<Double> x1, double y1, double deltaA1, List<Double> x2, double y2, double deltaA2) {
         MathUtil.add(ws, MathUtil.multiply(x1, y1 * deltaA1));
         MathUtil.add(ws, MathUtil.multiply(x2, y2 * deltaA2));
     }
 
+    /**
+     * Linear kernel
+     *
+     * @param r1 data point
+     * @param r2 data point
+     * @return dot product
+     * @throws Exception
+     */
     private double kernel(List<Double> r1, List<Double> r2) throws Exception {
         return MathUtil.dot(r1, r2);
     }
 
-
-    private int findMultiplierHeuristic(double e2, int i2, Matrix<Double> X, List<Double> Y, List<Integer> indices) throws Exception {
+    /**
+     * Find best alpha_j based on error.
+     *
+     * @param e2      error of alpha_i
+     * @param X       Training set
+     * @param Y       Training set labels
+     * @param indices indices of candidate multipliers
+     * @return index of best alpha_j
+     * @throws Exception
+     */
+    private int findMultiplierHeuristic(double e2, Matrix<Double> X, List<Double> Y, List<Integer> indices) throws Exception {
         double maxDelta = -1.0;
         int i1 = -1;
         for (int i = 0; i < indices.size(); i++) {
@@ -265,19 +277,27 @@ public class SMO {
         return a != 0.0 && a != C;
     }
 
+    /**
+     * Given a data point, predict the raw value using weights
+     *
+     * @param x a data point
+     * @return predict value
+     * @throws Exception
+     */
     private double predictOne(List<Double> x) throws Exception {
         return MathUtil.dot(ws, x) - b;
     }
 
+    /**
+     * Initialize all weights and Lagrange multiplier
+     *
+     * @param m number of data points
+     * @param n number of features
+     */
     private void initParameters(int m, int n) {
         as = MathUtil.zeros(m);
         ws = MathUtil.zeros(n);
         b = 0.0;
-    }
-
-    private boolean violateKKT(double a, double o, double y) throws Exception {
-        double m = y * o;
-        return (0.0 < a && a < C && m != 1.0) || (a == C && m > 1.0) || (a == 0.0 && m < 1.0);
     }
 
 }
