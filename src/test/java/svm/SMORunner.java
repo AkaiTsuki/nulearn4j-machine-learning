@@ -5,13 +5,49 @@ import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
 import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
 import org.nulearn4j.svm.SMO;
+import org.nulearn4j.svm.SVC;
 import org.nulearn4j.validation.Validation;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 public class SMORunner {
+
+    public static void digital(int size) throws Exception {
+        System.out.format("Load Dataset...\n");
+        Matrix<Double> train = DatasetLoader.loadData(",", "data/digital_train_features.txt");
+        Matrix<Double> test = DatasetLoader.loadData(",", "data/digital_test_features.txt");
+        List<Double> trainTarget = DatasetLoader.loadLabel("data/digital_train_target.txt");
+        List<Double> testTarget = DatasetLoader.loadLabel("data/digital_test_target.txt");
+
+        Normalization<Double> norm = new ZeroMeanUnitVar();
+        norm.setUpMeanAndStd(train);
+        norm.normalize(train);
+        norm.normalize(test);
+
+        train = train.split(size)[0];
+        trainTarget = trainTarget.subList(0, size);
+
+        int[] counts = new int[10];
+        for (int i = 0; i < train.getRowCount(); i++) {
+            counts[trainTarget.get(i).intValue()] += 1;
+        }
+        System.out.println("Class statistic: " + Arrays.toString(counts));
+
+        SVC svc = new SVC();
+        svc.fit(train, trainTarget);
+        List<Double> predicts = svc.predict(test);
+
+        double error = 0.0;
+        for (int i = 0; i < predicts.size(); i++) {
+            if (!predicts.get(i).equals(testTarget.get(i))) {
+                error += 1.0;
+            }
+        }
+        System.out.format("Total Acc: %f, Total Errors: %f", (1 - error / predicts.size()), error / predicts.size());
+    }
 
     public static void kfoldSpambase() throws Exception {
         Matrix<Double> spambase = DatasetLoader.loadSpambase(",");
@@ -97,7 +133,8 @@ public class SMORunner {
     public static void main(String[] args) throws Exception {
         final long startTime = System.nanoTime();
 //        spambase();
-        kfoldSpambase();
+//        kfoldSpambase();
+        digital(12000);
         final long endTime = System.nanoTime();
         System.out.format("Total Run time: %f secs\n", 1.0 * (endTime - startTime) / 1e9);
     }

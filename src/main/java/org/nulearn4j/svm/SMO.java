@@ -63,6 +63,17 @@ public class SMO {
     }
 
     /**
+     * Given a data point, predict the raw value using weights
+     *
+     * @param x a data point
+     * @return predict value
+     * @throws Exception
+     */
+    public double predictOne(List<Double> x) throws Exception {
+        return MathUtil.dot(ws, x) - b;
+    }
+
+    /**
      * Fit the training set to get optimization weights
      *
      * @param X training set
@@ -305,17 +316,6 @@ public class SMO {
      */
     private boolean isSupportVector(double a) {
         return a != 0.0 && a != C;
-    }
-
-    /**
-     * Given a data point, predict the raw value using weights
-     *
-     * @param x a data point
-     * @return predict value
-     * @throws Exception
-     */
-    private double predictOne(List<Double> x) throws Exception {
-        return MathUtil.dot(ws, x) - b;
     }
 
     /**
