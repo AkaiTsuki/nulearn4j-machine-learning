@@ -143,7 +143,7 @@ public class SMO {
             // fail to find best multiplier, loop through all support vectors, start at random position
             Collections.shuffle(indices);
             for (int i = 0; i < indices.size(); i++) {
-                if (takeStep(i, i2, X, Y) > 0) return 1;
+                if (takeStep(indices.get(i), i2, X, Y) > 0) return 1;
             }
 
             // fail to find support vectors, loop through all train data, start at random position
