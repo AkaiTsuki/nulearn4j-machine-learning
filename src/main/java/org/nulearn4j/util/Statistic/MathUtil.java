@@ -39,6 +39,24 @@ public class MathUtil {
         }
     }
 
+    public static List<Double> minus(List<Double> a, List<Double> b) throws Exception {
+        List<Double> l = new ArrayList<>(a.size());
+
+        for (int i = 0; i < a.size(); i++) {
+            l.add(a.get(i) - b.get(i));
+        }
+
+        return l;
+    }
+
+    public static double distance(List<Double> a, List<Double> b) throws Exception {
+        double d = 0;
+        for (int i = 0; i < a.size(); i++) {
+            d += (a.get(i) - b.get(i)) * (a.get(i) - b.get(i));
+        }
+        return Math.sqrt(d);
+    }
+
     public static List<Double> ones(int m) {
         return ns(m, 1.0);
     }
