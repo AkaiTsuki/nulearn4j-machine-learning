@@ -22,7 +22,7 @@ public class ECOC {
         for (int f = 0; f < code[0].length; f++) {
             List<Double> target = binaryLabels(trainTarget, code, f);
             System.out.format("============== Train function %d=============\n", f);
-            SMO smo = new SMO(0.05, 0.001, 0.001, 400);
+            SMO smo = new SMO(0.01, 0.001, 0.1, 400);
             smo.fit(train, target);
             smos.add(smo);
         }

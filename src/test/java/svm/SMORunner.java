@@ -5,8 +5,8 @@ import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
 import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
 import org.nulearn4j.multiclass.ECOC;
+import org.nulearn4j.multiclass.OneVsRest;
 import org.nulearn4j.svm.SMO;
-import org.nulearn4j.svm.SVC;
 import org.nulearn4j.validation.Validation;
 
 import java.util.Arrays;
@@ -72,7 +72,7 @@ public class SMORunner {
         }
         System.out.println("Class statistic: " + Arrays.toString(counts));
 
-        SVC svc = new SVC();
+        OneVsRest svc = new OneVsRest();
         svc.fit(train, trainTarget);
         List<Double> predicts = svc.predict(test);
 
@@ -124,7 +124,7 @@ public class SMORunner {
         trainTarget = trainTarget.stream().map((v) -> (v == 0) ? -1.0 : v).collect(Collectors.toList());
         testTarget = testTarget.stream().map((v) -> (v == 0) ? -1.0 : v).collect(Collectors.toList());
 
-        SMO classifier = new SMO();
+        SMO classifier = new SMO(0.01, 0.001, 0.1,400);
         classifier.fit(train, trainTarget);
         List<Double> predictLabels = classifier.predictToLabel(test);
         Validation.ConfusionMatrix cm = Validation.confusionMatrix(predictLabels, testTarget);
@@ -154,7 +154,7 @@ public class SMORunner {
         trainTarget = trainTarget.stream().map((v) -> (v == 0) ? -1.0 : v).collect(Collectors.toList());
         testTarget = testTarget.stream().map((v) -> (v == 0) ? -1.0 : v).collect(Collectors.toList());
 
-        SMO clf = new SMO();
+        SMO clf = new SMO(0.01, 0.001, 0.1, 400);
         clf.fit(train, trainTarget);
 
         List<Double> predicts = clf.predictToLabel(train);

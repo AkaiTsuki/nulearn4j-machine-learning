@@ -3,6 +3,7 @@ package org.nulearn4j.svm;
 import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.svm.kernel.Kernel;
 import org.nulearn4j.svm.kernel.LinearKernel;
+import org.nulearn4j.svm.kernel.RBFKernel;
 import org.nulearn4j.util.Statistic.MathUtil;
 
 import java.util.*;
@@ -328,7 +329,7 @@ public class SMO {
         as = MathUtil.zeros(m);
         ws = MathUtil.zeros(n);
         b = 0.0;
-        kernel = new LinearKernel(m);
+        kernel = new LinearKernel();
     }
 
 }
