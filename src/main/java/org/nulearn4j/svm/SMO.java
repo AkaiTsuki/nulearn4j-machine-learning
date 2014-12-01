@@ -1,5 +1,6 @@
 package org.nulearn4j.svm;
 
+import org.nulearn4j.classifier.Classifier;
 import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.svm.kernel.Kernel;
 import org.nulearn4j.svm.kernel.LinearKernel;
@@ -11,11 +12,16 @@ import java.util.*;
 /**
  * Created by jiachiliu on 11/26/14.
  */
-public class SMO {
+public class SMO implements Classifier {
     private double C = 0.05;
     private double eps = 0.001;
     private double tolerance = 0.001;
     private int maxLoop = 50;
+
+    /**
+     * Gamma parameter for RBF kerneal
+     */
+    private double gamma = 0.01;
     /**
      * Linear Weights
      */
@@ -41,18 +47,44 @@ public class SMO {
     public SMO() {
     }
 
+    public SMO(String kernel) {
+        this.kernel = getKernelInstance(kernel);
+    }
+
     public SMO(double c, double eps, double tolerance, int maxLoop) {
         this.C = c;
         this.eps = eps;
         this.tolerance = tolerance;
         this.maxLoop = maxLoop;
+        kernel = new LinearKernel();
     }
 
-    public List<Double> predictToLabel(Matrix<Double> X) throws Exception {
-        List<Double> l = new ArrayList<>(X.getRowCount());
+    public SMO(double c, double eps, double tolerance, int maxLoop, String kernel) {
+        this(c, eps, tolerance, maxLoop);
+        this.kernel = getKernelInstance(kernel);
+    }
 
-        for (int i = 0; i < X.getRowCount(); i++) {
-            double value = predictOne(X.getRow(i).getData());
+    public SMO(double c, double eps, double tolerance, int maxLoop, double gamma) {
+        this(c, eps, tolerance, maxLoop);
+        this.kernel = new RBFKernel(gamma);
+    }
+
+    @Override
+    public List<Double> predictRawScore(Matrix<Double> test) throws Exception {
+        List<Double> l = new ArrayList<>(test.getRowCount());
+        for (int i = 0; i < test.getRowCount(); i++) {
+            double value = predictOne(test.getRow(i).getData());
+            l.add(value);
+        }
+        return l;
+    }
+
+    @Override
+    public List<Double> predict(Matrix<Double> test) throws Exception {
+        List<Double> l = new ArrayList<>(test.getRowCount());
+
+        for (int i = 0; i < test.getRowCount(); i++) {
+            double value = predictOne(test.getRow(i).getData());
             if (value <= 0.0) {
                 l.add(-1.0);
             } else {
@@ -81,7 +113,8 @@ public class SMO {
      * @param Y training set label
      * @throws Exception
      */
-    public void fit(Matrix<Double> X, List<Double> Y) throws Exception {
+    @Override
+    public Classifier fit(Matrix<Double> X, List<Double> Y) throws Exception {
         int m = X.getRowCount();
         int n = X.getColumnCount();
 
@@ -114,6 +147,7 @@ public class SMO {
             loop++;
             if (loop > maxLoop) break;
         }
+        return this;
     }
 
     /**
@@ -329,7 +363,17 @@ public class SMO {
         as = MathUtil.zeros(m);
         ws = MathUtil.zeros(n);
         b = 0.0;
-        kernel = new LinearKernel();
+    }
+
+    private Kernel getKernelInstance(String kernel) {
+        switch (kernel) {
+            case "linear":
+                return new LinearKernel();
+            case "rbf":
+                return new RBFKernel();
+            default:
+                return new LinearKernel();
+        }
     }
 
 }

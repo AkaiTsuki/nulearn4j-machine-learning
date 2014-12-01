@@ -18,7 +18,7 @@ public class OneVsRest {
     public void fit(Matrix<Double> train, List<Double> trainTarget) throws Exception {
         for (double i = 0.0; i < 10.0; i++) {
             List<Double> targets = binaryLabels(trainTarget, i);
-            SMO smo = new SMO(0.01, 0.001, 0.1, 400);
+            SMO smo = new SMO(0.01, 0.001, 0.1, 200);
             System.out.format("=============== Train SMO for Label %f =============\n", i);
             smo.fit(train, targets);
             classifiers.add(smo);

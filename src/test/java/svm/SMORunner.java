@@ -1,10 +1,12 @@
 package svm;
 
+import org.nulearn4j.classifier.Classifier;
 import org.nulearn4j.dataset.loader.DatasetLoader;
 import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
 import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
 import org.nulearn4j.multiclass.ECOC;
+import org.nulearn4j.multiclass.OneVsOne;
 import org.nulearn4j.multiclass.OneVsRest;
 import org.nulearn4j.svm.SMO;
 import org.nulearn4j.validation.Validation;
@@ -72,7 +74,7 @@ public class SMORunner {
         }
         System.out.println("Class statistic: " + Arrays.toString(counts));
 
-        OneVsRest svc = new OneVsRest();
+        OneVsOne svc = new OneVsOne();
         svc.fit(train, trainTarget);
         List<Double> predicts = svc.predict(test);
 
@@ -85,7 +87,7 @@ public class SMORunner {
         System.out.format("Total Acc: %f, Total Errors: %f", (1 - error / predicts.size()), error / predicts.size());
     }
 
-    public static void kfoldSpambase() throws Exception {
+    public static void kfoldSpambase(double c, double eps, double tol, int max) throws Exception {
         Matrix<Double> spambase = DatasetLoader.loadSpambase(",");
         // Shuffle the data since it put all spam at the head fo file.
         spambase.shuffle();
@@ -99,7 +101,7 @@ public class SMORunner {
             System.out.println("\n============== Fold " + i + "=================");
             Matrix<Double> train = spambase.kFoldTrain(k, i);
             Matrix<Double> test = spambase.kFoldTest(k, i);
-            Validation.ConfusionMatrix cm = run(test, train);
+            Validation.ConfusionMatrix cm = run(test, train, c, eps, tol, max);
             accuracy += cm.accuracy();
             error += cm.error();
         }
@@ -107,7 +109,8 @@ public class SMORunner {
         System.out.println("Average Accuracy: " + accuracy / k + " Average error: " + error / k);
     }
 
-    private static Validation.ConfusionMatrix run(Matrix<Double> test, Matrix<Double> train) throws Exception {
+    private static Validation.ConfusionMatrix run(Matrix<Double> test, Matrix<Double> train,
+                                                  double c, double eps, double tol, int max) throws Exception {
         int label = train.getColumnCount() - 1;
         List<Double> trainTarget = train.getColumn(label);
         List<Double> testTarget = test.getColumn(label);
@@ -124,15 +127,15 @@ public class SMORunner {
         trainTarget = trainTarget.stream().map((v) -> (v == 0) ? -1.0 : v).collect(Collectors.toList());
         testTarget = testTarget.stream().map((v) -> (v == 0) ? -1.0 : v).collect(Collectors.toList());
 
-        SMO classifier = new SMO(0.01, 0.001, 0.1,400);
+        Classifier classifier = new SMO(c, eps, tol, max);
         classifier.fit(train, trainTarget);
-        List<Double> predictLabels = classifier.predictToLabel(test);
+        List<Double> predictLabels = classifier.predict(test);
         Validation.ConfusionMatrix cm = Validation.confusionMatrix(predictLabels, testTarget);
         System.out.println(cm);
         return cm;
     }
 
-    public static void spambase() throws Exception {
+    public static void spambase(double c, double eps, double tol, int max) throws Exception {
         Matrix<Double> spambase = DatasetLoader.loadSpambase(",");
         spambase.shuffle();
 
@@ -154,24 +157,22 @@ public class SMORunner {
         trainTarget = trainTarget.stream().map((v) -> (v == 0) ? -1.0 : v).collect(Collectors.toList());
         testTarget = testTarget.stream().map((v) -> (v == 0) ? -1.0 : v).collect(Collectors.toList());
 
-        SMO clf = new SMO(0.01, 0.001, 0.1, 400);
-        clf.fit(train, trainTarget);
+        Classifier clf = new SMO(c, eps, tol, max);
 
-        List<Double> predicts = clf.predictToLabel(train);
+        List<Double> predicts = clf.fit(train, trainTarget).predict(train);
         Validation.ConfusionMatrix cm = Validation.confusionMatrix(predicts, trainTarget);
         System.out.println("============== Train Performance==========\n" + cm);
 
-        predicts = clf.predictToLabel(test);
+        predicts = clf.predict(test);
         cm = Validation.confusionMatrix(predicts, testTarget);
         System.out.println("============== Test Performance==========\n" + cm);
     }
 
     public static void main(String[] args) throws Exception {
         final long startTime = System.nanoTime();
-//        spambase();
-//        kfoldSpambase();
+//        spambase(0.01, 0.001, 0.1, 50);
+//        kfoldSpambase(0.01, 0.001, 0.1, 50);
         digital(12000);
-//        ecoc(12000);
         final long endTime = System.nanoTime();
         System.out.format("Total Run time: %f secs\n", 1.0 * (endTime - startTime) / 1e9);
     }
