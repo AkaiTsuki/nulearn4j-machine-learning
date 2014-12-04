@@ -7,6 +7,7 @@ import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
 import org.nulearn4j.neighbor.ClassificationKNN;
 import org.nulearn4j.neighbor.KNN;
 import org.nulearn4j.neighbor.Kernel;
+import org.nulearn4j.neighbor.WindowKNN;
 import org.nulearn4j.validation.Validation;
 
 import java.util.Arrays;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class KNNRunner {
 
-    public static void spambase(int k, String kernel) throws Exception {
+    public static void spambase(double k, String kernel, String type) throws Exception {
         Matrix<Double> spambase = DatasetLoader.loadSpambase(",");
         spambase.shuffle();
 
@@ -36,7 +37,12 @@ public class KNNRunner {
         normalization.normalize(train);
         normalization.normalize(test);
 
-        KNN clf = new ClassificationKNN(k, kernel);
+        KNN clf;
+        if (type.equals("window")) {
+            clf = new WindowKNN(k, kernel);
+        } else {
+            clf = new ClassificationKNN(k, kernel);
+        }
         System.out.println(clf);
 
         List<Double> predicts = clf.predict(train, trainTarget, test);
@@ -44,7 +50,7 @@ public class KNNRunner {
         System.out.println("============== Test Performance==========\n" + cm);
     }
 
-    public static void digital(int size, int k, String kernel) throws Exception {
+    public static void digital(int size, double k, String kernel, String type) throws Exception {
         System.out.format("Load Dataset...\n");
         Matrix<Double> train = DatasetLoader.loadData(",", "data/digital_train_features.txt");
         Matrix<Double> test = DatasetLoader.loadData(",", "data/digital_test_features.txt");
@@ -65,7 +71,13 @@ public class KNNRunner {
         }
         System.out.println("Class statistic: " + Arrays.toString(counts));
 
-        KNN clf = new ClassificationKNN(k, kernel);
+        KNN clf;
+        if (type.equals("window")) {
+            clf = new WindowKNN(k, kernel);
+        } else {
+            clf = new ClassificationKNN(k, kernel);
+        }
+        System.out.println(clf);
         List<Double> predicts = clf.predict(train, trainTarget, test);
 
         double error = 0.0;
@@ -80,8 +92,10 @@ public class KNNRunner {
     public static void main(String[] args) throws Exception {
         final long startTime = System.nanoTime();
 
-        spambase(7, Kernel.EUCLIDIAN);
-//        digital(12000, 7, Kernel.POLY);
+//        spambase(4, Kernel.EUCLIDIAN, "normal");
+//        spambase(4, Kernel.EUCLIDIAN, "window");
+//        digital(12000, 7, Kernel.GAUSSIAN, "normal");
+        digital(12000, -0.8, Kernel.COSINE, "window");
 
         final long endTime = System.nanoTime();
         System.out.format("Total Run time: %f secs\n", 1.0 * (endTime - startTime) / 1e9);

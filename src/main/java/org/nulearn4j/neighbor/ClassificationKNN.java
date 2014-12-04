@@ -13,11 +13,11 @@ public class ClassificationKNN extends KNN {
         super();
     }
 
-    public ClassificationKNN(int k) {
+    public ClassificationKNN(double k) {
         super(k);
     }
 
-    public ClassificationKNN(int k, String kernel) {
+    public ClassificationKNN(double k, String kernel) {
         super(k, kernel);
     }
 

@@ -13,34 +13,23 @@ import java.util.stream.Collectors;
  */
 public abstract class KNN {
 
-    private int K = 10;
+    protected double K = 10;
     private Kernel kernel = new EuclidianDistanceKernel();
 
     public KNN() {
     }
 
-    public KNN(int k) {
+    public KNN(double k) {
         K = k;
     }
 
-    public KNN(int k, String kernel) {
+    public KNN(double k, String kernel) {
         K = k;
         this.kernel = getKernel(kernel);
     }
 
     protected Kernel getKernel(String kernel) {
-        switch (kernel) {
-            case Kernel.EUCLIDIAN:
-                return new EuclidianDistanceKernel();
-            case Kernel.COSINE:
-                return new CosineKernel();
-            case Kernel.GAUSSIAN:
-                return new GaussianKernel();
-            case Kernel.POLY:
-                return new PolyKernel();
-            default:
-                return new EuclidianDistanceKernel();
-        }
+        return KernelFactory.getInstance(kernel);
     }
 
     public List<Double> predict(Matrix<Double> train, List<Double> trainTarget, Matrix<Double> test) throws Exception {
@@ -48,15 +37,17 @@ public abstract class KNN {
     }
 
     private double predictOne(Matrix<Double> train, List<Double> trainTarget, List<Double> p) {
-        int m = train.getRowCount();
-        List<Integer> indices = MathUtil.range(0, m);
-
         List<Double> scores = train.getRows().parallelStream().map(t -> calculateScore(t.getData(), p)).collect(Collectors.toList());
-        Collections.sort(indices, (a, b) -> scores.get(a).compareTo(scores.get(b)));
 
-//        List<Integer> neighbors = indices.subList(indices.size() - K, indices.size());
-        List<Integer> neighbors = indices.subList(0, K);
+        List<Integer> neighbors = findNeighbors(scores);
         return getPredictValue(neighbors, trainTarget);
+    }
+
+    protected List<Integer> findNeighbors(List<Double> scores) {
+        int m = scores.size();
+        List<Integer> indices = MathUtil.range(0, m);
+        Collections.sort(indices, (a, b) -> scores.get(a).compareTo(scores.get(b)));
+        return indices.subList(0, (int) K);
     }
 
     protected double calculateScore(List<Double> data, List<Double> p) {
