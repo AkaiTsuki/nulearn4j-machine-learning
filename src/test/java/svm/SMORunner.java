@@ -127,7 +127,7 @@ public class SMORunner {
         trainTarget = trainTarget.stream().map((v) -> (v == 0) ? -1.0 : v).collect(Collectors.toList());
         testTarget = testTarget.stream().map((v) -> (v == 0) ? -1.0 : v).collect(Collectors.toList());
 
-        Classifier classifier = new SMO(c, eps, tol, max);
+        Classifier classifier = new SMO(c, eps, tol, max, 0.001);
         classifier.fit(train, trainTarget);
         List<Double> predictLabels = classifier.predict(test);
         Validation.ConfusionMatrix cm = Validation.confusionMatrix(predictLabels, testTarget);
