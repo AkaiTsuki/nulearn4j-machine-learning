@@ -62,7 +62,7 @@ public class DatasetLoader {
         return parser.parse(f, regex);
     }
 
-    public static Matrix<Double> loadSpambase(String regex) throws Exception{
+    public static Matrix<Double> loadSpambase(String regex) throws Exception {
         String path = "data/spambase.data";
         ResourceFileReader reader = new ResourceFileReader();
         File f = reader.read(path);
@@ -70,7 +70,15 @@ public class DatasetLoader {
         return parser.parse(f, regex);
     }
 
-    public static Matrix<Double> loadPolluteSpamBaseTrain(String regex) throws Exception{
+    public static Matrix<Double> loadPerceptronData(String regex) throws Exception {
+        String path = "data/perceptronData.txt";
+        ResourceFileReader reader = new ResourceFileReader();
+        File f = reader.read(path);
+        DoubleMatrixParser parser = new DoubleMatrixParser();
+        return parser.parse(f, regex);
+    }
+
+    public static Matrix<Double> loadPolluteSpamBaseTrain(String regex) throws Exception {
         String path = "data/spam_polluted/train_feature.txt";
         ResourceFileReader reader = new ResourceFileReader();
         File f = reader.read(path);
@@ -78,7 +86,7 @@ public class DatasetLoader {
         return parser.parse(f, regex);
     }
 
-    public static Matrix<Double> loadPolluteSpamBaseTest(String regex) throws Exception{
+    public static Matrix<Double> loadPolluteSpamBaseTest(String regex) throws Exception {
         String path = "data/spam_polluted/test_feature.txt";
         ResourceFileReader reader = new ResourceFileReader();
         File f = reader.read(path);
@@ -86,7 +94,7 @@ public class DatasetLoader {
         return parser.parse(f, regex);
     }
 
-    public static List<Double> loadLabel(String path) throws Exception{
+    public static List<Double> loadLabel(String path) throws Exception {
         ResourceFileReader reader = new ResourceFileReader();
         File f = reader.read(path);
         List<Double> targets = new ArrayList<>();
@@ -94,14 +102,14 @@ public class DatasetLoader {
         BufferedReader br = new BufferedReader(new FileReader(f));
         String line;
 
-        while ((line = br.readLine()) != null){
-            if(line.trim().length() > 0)
+        while ((line = br.readLine()) != null) {
+            if (line.trim().length() > 0)
                 targets.add(Double.parseDouble(line.trim()));
         }
         return targets;
     }
 
-    public static Matrix<Double> loadData(String regex, String path) throws Exception{
+    public static Matrix<Double> loadData(String regex, String path) throws Exception {
         ResourceFileReader reader = new ResourceFileReader();
         File f = reader.read(path);
         DoubleMatrixParser parser = new DoubleMatrixParser();

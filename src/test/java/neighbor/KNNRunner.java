@@ -4,6 +4,7 @@ import org.nulearn4j.dataset.loader.DatasetLoader;
 import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
 import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
+import org.nulearn4j.linear.Perceptron;
 import org.nulearn4j.neighbor.*;
 import org.nulearn4j.validation.Validation;
 
@@ -14,6 +15,19 @@ import java.util.List;
  * Created by jiachiliu on 12/3/14.
  */
 public class KNNRunner {
+
+    public static void dualPerceptron() throws Exception {
+        Matrix<Double> train = DatasetLoader.loadPerceptronData("\t");
+        train = train.addColumn(0, 1.0);
+
+        int label = train.getColumnCount() - 1;
+        List<Double> trainTarget = train.getColumn(label);
+        train = train.removeColumn(label);
+
+        DualPerceptron perceptron = new DualPerceptron(new DotProductKernel());
+        perceptron.fit(train, trainTarget);
+
+    }
 
     public static void digitalKDE(int size, Configuration config) throws Exception {
         System.out.format("Load Dataset...\n");
@@ -188,11 +202,12 @@ public class KNNRunner {
 //        digitalKDE(12000, config);
 
         /* PB2-2 digital with KDE */
-        config.set("kernel", Kernel.POLY);
-        config.setDouble("degree", 2.0);
-        config.setDouble("C", 15.0);
-        digitalKDE(12000, config);
+//        config.set("kernel", Kernel.POLY);
+//        config.setDouble("degree", 2.0);
+//        config.setDouble("C", 15.0);
+//        digitalKDE(12000, config);
 
+        dualPerceptron();
 
         final long endTime = System.nanoTime();
         System.out.format("Total Run time: %f secs\n", 1.0 * (endTime - startTime) / 1e9);
