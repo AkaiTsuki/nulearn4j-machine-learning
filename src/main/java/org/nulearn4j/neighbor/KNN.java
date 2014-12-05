@@ -23,14 +23,11 @@ public abstract class KNN {
         K = k;
     }
 
-    public KNN(double k, String kernel) {
+    public KNN(double k, Configuration config) {
         K = k;
-        this.kernel = getKernel(kernel);
+        this.kernel = KernelFactory.getInstance(config);
     }
 
-    protected Kernel getKernel(String kernel) {
-        return KernelFactory.getInstance(kernel);
-    }
 
     public List<Double> predict(Matrix<Double> train, List<Double> trainTarget, Matrix<Double> test) throws Exception {
         return test.getRows().parallelStream().map(t -> predictOne(train, trainTarget, t.getData())).collect(Collectors.toList());

@@ -17,8 +17,8 @@ public class ClassificationKNN extends KNN {
         super(k);
     }
 
-    public ClassificationKNN(double k, String kernel) {
-        super(k, kernel);
+    public ClassificationKNN(double k, Configuration config) {
+        super(k, config);
     }
 
     @Override

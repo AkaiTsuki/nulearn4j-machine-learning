@@ -18,8 +18,8 @@ public class WindowKNN extends ClassificationKNN {
         super(k);
     }
 
-    public WindowKNN(double k, String kernel) {
-        super(k, kernel);
+    public WindowKNN(double k, Configuration config) {
+        super(k, config);
     }
 
     @Override
