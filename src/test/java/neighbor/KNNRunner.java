@@ -4,7 +4,7 @@ import org.nulearn4j.dataset.loader.DatasetLoader;
 import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
 import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
-import org.nulearn4j.linear.Perceptron;
+import org.nulearn4j.linear.DualPerceptron;
 import org.nulearn4j.neighbor.*;
 import org.nulearn4j.validation.Validation;
 

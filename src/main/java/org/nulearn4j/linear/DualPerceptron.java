@@ -1,7 +1,8 @@
-package org.nulearn4j.neighbor;
+package org.nulearn4j.linear;
 
 import org.nulearn4j.dataset.matrix.Matrix;
 import org.nulearn4j.dataset.matrix.Row;
+import org.nulearn4j.neighbor.Kernel;
 import org.nulearn4j.util.Statistic.MathUtil;
 
 import java.util.Arrays;

@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad5ad2cb-1590-4c8a-888a-6b7fa25061af" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/neighbor/DotProductKernel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/neighbor/DualPerceptron.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/linear/Perceptron.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/loader/DatasetLoader.java" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/dataset/loader/DatasetLoader.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/org/nulearn4j/neighbor/DualPerceptron.java" afterPath="$PROJECT_DIR$/src/main/java/org/nulearn4j/linear/DualPerceptron.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/neighbor/KNNRunner.java" afterPath="$PROJECT_DIR$/src/test/java/neighbor/KNNRunner.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -69,44 +66,7 @@
     <favorites_list name="nulearn4j" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="KNNRunner.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/java/neighbor/KNNRunner.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40966386" vertical-offset="90" max-vertical-offset="3180">
-              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DotProductKernel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/nulearn4j/neighbor/DotProductKernel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
-              <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#285#286#0" expanded="true" />
-                <element signature="e#326#327#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Perceptron.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/nulearn4j/linear/Perceptron.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1020">
-              <caret line="27" column="39" selection-start-line="26" selection-start-column="8" selection-end-line="27" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -1205,7 +1165,7 @@
       <workItem from="1417624666130" duration="188000" />
       <workItem from="1417653347821" duration="10096000" />
       <workItem from="1417723515817" duration="11452000" />
-      <workItem from="1417806137919" duration="5352000" />
+      <workItem from="1417806137919" duration="5473000" />
     </task>
     <task id="LOCAL-00001" summary="Create basic data structure to save matrix dataset.&#10;Create dataset loader to load data from file.">
       <created>1413600108121</created>
@@ -1331,11 +1291,15 @@
       <created>1417751279528</created>
       <updated>1417751279528</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Implemented Perceptron and Dual form of Perceptron">
+      <created>1417817940630</created>
+      <updated>1417817940630</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153365000" />
+    <option name="totallyTimeSpent" value="153486000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1405,7 +1369,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="1. Implemented logistic regression.&#10;2. Implemented Confusion Matrix.&#10;3. Added new dataset Spambase.&#10;4. Added split and shuffle method in Matrix" />
     <MESSAGE value="Added workspace.xml" />
     <MESSAGE value="Updated readme" />
     <MESSAGE value="Implemented K-Fold Cross Validation on spambase dataset." />
@@ -1430,7 +1393,8 @@
     <MESSAGE value="Implemented KNN with different Kernels" />
     <MESSAGE value="Implemented KNN with window" />
     <MESSAGE value="Implemented Kernel Density Estimator" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented Kernel Density Estimator" />
+    <MESSAGE value="Implemented Perceptron and Dual form of Perceptron" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented Perceptron and Dual form of Perceptron" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1818,14 +1782,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/nulearn4j/neighbor/DualPerceptron.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/nulearn4j/linear/DualPerceptron.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1657459" vertical-offset="133" max-vertical-offset="1230">
           <caret line="37" column="49" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#385#386#0" expanded="true" />
-            <element signature="e#411#412#0" expanded="true" />
+            <element signature="e#421#422#0" expanded="true" />
+            <element signature="e#447#448#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1843,8 +1807,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/neighbor/KNNRunner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40966386" vertical-offset="90" max-vertical-offset="3180">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.53867406" vertical-offset="180" max-vertical-offset="3180">
+          <caret line="34" column="29" selection-start-line="34" selection-start-column="29" selection-end-line="34" selection-end-column="29" />
           <folding />
         </state>
       </provider>
