@@ -1,11 +1,11 @@
-package net.nulearn4j.util.Statistic;
+package net.nulearn4j.util;
 
 import java.util.List;
 
 /**
  * Created by jiachiliu on 10/18/14.
  */
-public class DoubleListStatistic {
+public class StatisticUtil {
     /**
      * @param list a list of values
      * @return the mean of given values

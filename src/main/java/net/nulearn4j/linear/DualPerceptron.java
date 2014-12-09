@@ -3,7 +3,7 @@ package net.nulearn4j.linear;
 import net.nulearn4j.core.matrix.Matrix;
 import net.nulearn4j.core.matrix.Row;
 import net.nulearn4j.neighbor.Kernel;
-import net.nulearn4j.util.Statistic.MathUtil;
+import net.nulearn4j.util.MathUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;

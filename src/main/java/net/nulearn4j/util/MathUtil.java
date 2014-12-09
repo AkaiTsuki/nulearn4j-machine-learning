@@ -1,4 +1,4 @@
-package net.nulearn4j.util.Statistic;
+package net.nulearn4j.util;
 
 import net.nulearn4j.core.matrix.Matrix;
 import net.nulearn4j.core.matrix.Row;

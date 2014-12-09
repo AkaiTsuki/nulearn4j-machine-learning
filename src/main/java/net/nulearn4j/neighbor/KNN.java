@@ -1,7 +1,7 @@
 package net.nulearn4j.neighbor;
 
 import net.nulearn4j.core.matrix.Matrix;
-import net.nulearn4j.util.Statistic.MathUtil;
+import net.nulearn4j.util.MathUtil;
 
 import java.util.Collections;
 import java.util.List;

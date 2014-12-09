@@ -1,6 +1,6 @@
 package net.nulearn4j.svm.kernel;
 
-import net.nulearn4j.util.Statistic.MathUtil;
+import net.nulearn4j.util.MathUtil;
 
 import java.util.List;
 

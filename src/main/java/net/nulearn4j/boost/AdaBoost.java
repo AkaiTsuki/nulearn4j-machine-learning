@@ -4,7 +4,7 @@ import net.nulearn4j.boost.learner.OptimalLearner;
 import net.nulearn4j.core.matrix.Matrix;
 import net.nulearn4j.core.matrix.Row;
 import net.nulearn4j.validation.Validation;
-import net.nulearn4j.util.Statistic.MathUtil;
+import net.nulearn4j.util.MathUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -1,6 +1,6 @@
 package net.nulearn4j.tree;
 
-import net.nulearn4j.util.Statistic.DoubleListStatistic;
+import net.nulearn4j.util.StatisticUtil;
 import net.nulearn4j.validation.Validation;
 import org.apache.log4j.BasicConfigurator;
 import net.nulearn4j.dataset.loader.DatasetLoader;
@@ -25,7 +25,7 @@ public class RegressionTree extends Cart {
     @Override
     protected double calculateScore(Matrix<Double> matrix) {
         List<Double> target = matrix.getColumn(label);
-        double mean = DoubleListStatistic.mean(target);
+        double mean = StatisticUtil.mean(target);
         double sse = 0.0;
         for (Double t : target) {
             sse += (t - mean) * (t - mean);
@@ -41,7 +41,7 @@ public class RegressionTree extends Cart {
     @Override
     protected double majorityVote(Matrix<Double> matrix) {
         List<Double> target = matrix.getColumn(label);
-        return DoubleListStatistic.mean(target);
+        return StatisticUtil.mean(target);
     }
 
     @Override

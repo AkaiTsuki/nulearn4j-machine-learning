@@ -5,7 +5,7 @@ import net.nulearn4j.svm.kernel.Kernel;
 import net.nulearn4j.svm.kernel.RBFKernel;
 import net.nulearn4j.core.matrix.Matrix;
 import net.nulearn4j.svm.kernel.LinearKernel;
-import net.nulearn4j.util.Statistic.MathUtil;
+import net.nulearn4j.util.MathUtil;
 
 import java.util.*;
 
