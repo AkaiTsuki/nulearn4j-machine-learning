@@ -1,7 +1,7 @@
-package net.nulearn4j.dataset.preprocessing.normalization;
+package net.nulearn4j.normalization;
 
 import net.nulearn4j.util.Statistic.DoubleListStatistic;
-import net.nulearn4j.dataset.matrix.Matrix;
+import net.nulearn4j.core.matrix.Matrix;
 
 import java.util.ArrayList;
 import java.util.List;

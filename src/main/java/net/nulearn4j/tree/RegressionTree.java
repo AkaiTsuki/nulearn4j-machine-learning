@@ -4,7 +4,7 @@ import net.nulearn4j.util.Statistic.DoubleListStatistic;
 import net.nulearn4j.validation.Validation;
 import org.apache.log4j.BasicConfigurator;
 import net.nulearn4j.dataset.loader.DatasetLoader;
-import net.nulearn4j.dataset.matrix.Matrix;
+import net.nulearn4j.core.matrix.Matrix;
 
 import java.util.List;
 import java.util.stream.IntStream;

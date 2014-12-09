@@ -1,6 +1,6 @@
 package net.nulearn4j.boost.learner;
 
-import net.nulearn4j.dataset.matrix.Matrix;
+import net.nulearn4j.core.matrix.Matrix;
 
 import java.util.*;
 

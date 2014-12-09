@@ -1,7 +1,7 @@
 package net.nulearn4j.util.Statistic;
 
-import net.nulearn4j.dataset.matrix.Matrix;
-import net.nulearn4j.dataset.matrix.Row;
+import net.nulearn4j.core.matrix.Matrix;
+import net.nulearn4j.core.matrix.Row;
 
 import java.util.ArrayList;
 import java.util.Collections;

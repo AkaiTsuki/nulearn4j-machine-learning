@@ -2,10 +2,10 @@ package net.nulearn4j.linear;
 
 import net.nulearn4j.validation.Validation;
 import net.nulearn4j.dataset.loader.DatasetLoader;
-import net.nulearn4j.dataset.matrix.Matrix;
-import net.nulearn4j.dataset.matrix.Row;
-import net.nulearn4j.dataset.preprocessing.normalization.Normalization;
-import net.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
+import net.nulearn4j.core.matrix.Matrix;
+import net.nulearn4j.core.matrix.Row;
+import net.nulearn4j.normalization.Normalization;
+import net.nulearn4j.normalization.ZeroMeanUnitVar;
 
 import java.util.List;
 import java.util.stream.Collectors;

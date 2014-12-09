@@ -1,4 +1,4 @@
-package net.nulearn4j.dataset.matrix;
+package net.nulearn4j.core.matrix;
 
 import java.util.ArrayList;
 import java.util.List;

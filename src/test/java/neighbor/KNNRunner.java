@@ -1,9 +1,9 @@
 package neighbor;
 
 import net.nulearn4j.dataset.loader.DatasetLoader;
-import net.nulearn4j.dataset.matrix.Matrix;
-import net.nulearn4j.dataset.preprocessing.normalization.Normalization;
-import net.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
+import net.nulearn4j.core.matrix.Matrix;
+import net.nulearn4j.normalization.Normalization;
+import net.nulearn4j.normalization.ZeroMeanUnitVar;
 import net.nulearn4j.linear.DualPerceptron;
 import net.nulearn4j.neighbor.*;
 import net.nulearn4j.validation.Validation;
@@ -196,13 +196,13 @@ public class KNNRunner {
         Configuration config = new Configuration();
 
         /* PB1-1 Spambase */
-//        config.set("type", "normal");
-//        config.set("kernel", Kernel.EUCLIDIAN);
-//        spambase(7, config);
+        config.set("type", "normal");
+        config.set("kernel", Kernel.EUCLIDIAN);
+        spambase(7, config);
 //
         /* PB1-1 digital */
-        config.set("type", "normal");
-        config.set("kernel", Kernel.GAUSSIAN);
+//        config.set("type", "normal");
+//        config.set("kernel", Kernel.GAUSSIAN);
 
 //        config.setDouble("degree", 2.0);
 //        config.setDouble("C", 20.0);
@@ -235,7 +235,7 @@ public class KNNRunner {
 //        config.setDouble("C", 15.0);
 //        digitalKDE(12000, config);
 
-        dualPerceptron();
+//        dualPerceptron();
 //        twoSpiral();
 
         final long endTime = System.nanoTime();

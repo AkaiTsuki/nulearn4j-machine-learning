@@ -1,10 +1,10 @@
 package svm;
 
-import net.nulearn4j.classifier.Classifier;
+import net.nulearn4j.core.classifier.Classifier;
 import net.nulearn4j.dataset.loader.DatasetLoader;
-import net.nulearn4j.dataset.matrix.Matrix;
-import net.nulearn4j.dataset.preprocessing.normalization.Normalization;
-import net.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
+import net.nulearn4j.core.matrix.Matrix;
+import net.nulearn4j.normalization.Normalization;
+import net.nulearn4j.normalization.ZeroMeanUnitVar;
 import net.nulearn4j.multiclass.ECOC;
 import net.nulearn4j.multiclass.OneVsOne;
 import net.nulearn4j.svm.SMO;

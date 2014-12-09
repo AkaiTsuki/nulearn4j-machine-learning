@@ -1,6 +1,6 @@
-package net.nulearn4j.classifier;
+package net.nulearn4j.core.classifier;
 
-import net.nulearn4j.dataset.matrix.Matrix;
+import net.nulearn4j.core.matrix.Matrix;
 
 import java.util.List;
 

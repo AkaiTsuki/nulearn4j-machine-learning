@@ -1,9 +1,9 @@
 package net.nulearn4j.svm;
 
-import net.nulearn4j.classifier.Classifier;
+import net.nulearn4j.core.classifier.Classifier;
 import net.nulearn4j.svm.kernel.Kernel;
 import net.nulearn4j.svm.kernel.RBFKernel;
-import net.nulearn4j.dataset.matrix.Matrix;
+import net.nulearn4j.core.matrix.Matrix;
 import net.nulearn4j.svm.kernel.LinearKernel;
 import net.nulearn4j.util.Statistic.MathUtil;
 

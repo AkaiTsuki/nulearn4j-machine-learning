@@ -1,8 +1,8 @@
 package net.nulearn4j.multiclass;
 
-import net.nulearn4j.dataset.matrix.DoubleMatrix;
-import net.nulearn4j.dataset.matrix.Matrix;
-import net.nulearn4j.dataset.matrix.Row;
+import net.nulearn4j.core.matrix.DoubleMatrix;
+import net.nulearn4j.core.matrix.Matrix;
+import net.nulearn4j.core.matrix.Row;
 import net.nulearn4j.svm.SMO;
 
 import java.util.ArrayList;

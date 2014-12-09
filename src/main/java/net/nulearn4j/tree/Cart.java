@@ -1,7 +1,7 @@
 package net.nulearn4j.tree;
 
-import net.nulearn4j.dataset.matrix.Matrix;
-import net.nulearn4j.dataset.matrix.Row;
+import net.nulearn4j.core.matrix.Matrix;
+import net.nulearn4j.core.matrix.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
