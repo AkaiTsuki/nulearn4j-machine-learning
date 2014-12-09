@@ -11,6 +11,8 @@ import java.util.*;
 
 /**
  * Created by jiachiliu on 11/26/14.
+ * <p>
+ * Implement SMO for Support Vector Machine(SVM)
  */
 public class SMO implements Classifier {
     private double C = 0.05;
@@ -18,10 +20,6 @@ public class SMO implements Classifier {
     private double tolerance = 0.001;
     private int maxLoop = 50;
 
-    /**
-     * Gamma parameter for RBF kerneal
-     */
-    private double gamma = 0.01;
     /**
      * Linear Weights
      */

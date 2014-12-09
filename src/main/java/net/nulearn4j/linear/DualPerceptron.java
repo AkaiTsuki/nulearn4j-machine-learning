@@ -51,7 +51,7 @@ public class DualPerceptron {
 
     public void fit(Matrix<Double> train, List<Double> target) throws Exception {
         count = MathUtil.zeros(train.getRowCount());
-        flip(train, target);
+//        flip(train, target);
 
         int l = 0;
         int c;
@@ -61,13 +61,13 @@ public class DualPerceptron {
             for (int i = 0; i < train.getRowCount(); i++) {
                 Row<Double> r = train.getRow(i);
                 double p = predictOne(r.getData(), train);
-                if (p <= 0) {
+                if (p * target.get(i) <= 0) {
                     c += 1;
-                    count.set(i, count.get(i) + 1);
+                    count.set(i, count.get(i) + target.get(i));
                 }
             }
             System.out.format("iteration %d: total mistakes %d\n", l, c);
-        } while (c > 0 && l<400);
+        } while (c > 0 && l < 4000);
     }
 
     private void flip(Matrix<Double> train, List<Double> target) {

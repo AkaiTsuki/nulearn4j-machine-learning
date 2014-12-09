@@ -169,9 +169,9 @@ public class SMORunner {
 
     public static void main(String[] args) throws Exception {
         final long startTime = System.nanoTime();
-//        spambase(0.01, 0.001, 0.1, 50);
+        spambase(0.01, 0.001, 0.1, 50);
 //        kfoldSpambase(0.01, 0.001, 0.1, 50);
-        digital(12000);
+//        digital(12000);
         final long endTime = System.nanoTime();
         System.out.format("Total Run time: %f secs\n", 1.0 * (endTime - startTime) / 1e9);
     }

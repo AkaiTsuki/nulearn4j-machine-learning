@@ -10,6 +10,7 @@ import net.nulearn4j.validation.Validation;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by jiachiliu on 12/3/14.
@@ -33,15 +34,15 @@ public class KNNRunner {
         train = train.addColumn(0, 1.0);
         test = test.addColumn(0, 1.0);
 
-        DualPerceptron perceptron = new DualPerceptron(new AbsoluteKernel(new GaussianKernel(9)));
+        DualPerceptron perceptron = new DualPerceptron(new AbsoluteKernel(new GaussianKernel(5)));
 //        DualPerceptron perceptron = new DualPerceptron(new DotProductKernel());
         perceptron.fit(train, trainTarget);
         List<Double> predicts = perceptron.predict(test, train);
 //        System.out.println(predicts);
 //        System.out.println(testTarget);
-//        predicts = predicts.stream().map(p -> (p <= 0.3) ? -1.0 : 1.0).collect(Collectors.toList());
-//        Validation.ConfusionMatrix cm = Validation.confusionMatrix(predicts, testTarget);
-//        System.out.println("============== Test Performance==========\n" + cm);
+        predicts = predicts.stream().map(p -> (p <= 0.5) ? -1.0 : 1.0).collect(Collectors.toList());
+        Validation.ConfusionMatrix cm = Validation.confusionMatrix(predicts, testTarget);
+        System.out.println("============== Test Performance==========\n" + cm);
     }
 
     public static void dualPerceptron() throws Exception {
@@ -236,7 +237,7 @@ public class KNNRunner {
 //        digitalKDE(12000, config);
 
 //        dualPerceptron();
-//        twoSpiral();
+        twoSpiral();
 
         final long endTime = System.nanoTime();
         System.out.format("Total Run time: %f secs\n", 1.0 * (endTime - startTime) / 1e9);
