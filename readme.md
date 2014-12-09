@@ -11,3 +11,12 @@ Logistic Regression is tested on spambase dataset with 10 fold cross validation,
 ## Tree
 This package implements binary decision tree and regression tree. The decision tree tests spambase with 10-fold cross validation
 and get about 89 ~ 90% accuracy. The regression tree is testing on boston housing dataset with a 2-level regression tree(MSE: 24.282).
+
+## Boosting
+Implemented Adaboost with One-node decision tree weak learner.
+
+## SVM
+Implemented SMO for SVM classifier. Currently only support Linear Kernel.
+
+## Nearest Neighbors
+Implemented KNN with different Kernels.
