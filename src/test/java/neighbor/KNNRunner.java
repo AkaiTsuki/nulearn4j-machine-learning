@@ -196,10 +196,10 @@ public class KNNRunner {
         Configuration config = new Configuration();
 
         /* PB1-1 Spambase */
-        config.set("type", "normal");
-        config.set("kernel", Kernel.EUCLIDIAN);
-        spambase(7, config);
-//
+//        config.set("type", "normal");
+//        config.set("kernel", Kernel.EUCLIDIAN);
+//        spambase(7, config);
+
         /* PB1-1 digital */
 //        config.set("type", "normal");
 //        config.set("kernel", Kernel.GAUSSIAN);

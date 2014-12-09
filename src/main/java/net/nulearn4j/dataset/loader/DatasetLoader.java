@@ -46,62 +46,6 @@ public class DatasetLoader {
         }
     }
 
-    public static Matrix<Double> loadBostonHousingTrain(String regex) throws Exception {
-        String path = "data/housing_train.txt";
-        ResourceFileReader reader = new ResourceFileReader();
-        File f = reader.read(path);
-        DoubleMatrixParser parser = new DoubleMatrixParser();
-        return parser.parse(f, regex);
-    }
-
-    public static Matrix<Double> loadBostonHousingTest(String regex) throws Exception {
-        String path = "data/housing_test.txt";
-        ResourceFileReader reader = new ResourceFileReader();
-        File f = reader.read(path);
-        DoubleMatrixParser parser = new DoubleMatrixParser();
-        return parser.parse(f, regex);
-    }
-
-    public static Matrix<Double> loadSpambase(String regex) throws Exception {
-        String path = "data/spambase.data";
-        ResourceFileReader reader = new ResourceFileReader();
-        File f = reader.read(path);
-        DoubleMatrixParser parser = new DoubleMatrixParser();
-        return parser.parse(f, regex);
-    }
-
-    public static Matrix<Double> loadPerceptronData(String regex) throws Exception {
-        String path = "data/perceptronData.txt";
-        ResourceFileReader reader = new ResourceFileReader();
-        File f = reader.read(path);
-        DoubleMatrixParser parser = new DoubleMatrixParser();
-        return parser.parse(f, regex);
-    }
-
-    public static Matrix<Double> loadTwoSpiralData(String regex) throws Exception {
-        String path = "data/twoSpirals.txt";
-        ResourceFileReader reader = new ResourceFileReader();
-        File f = reader.read(path);
-        DoubleMatrixParser parser = new DoubleMatrixParser();
-        return parser.parse(f, regex);
-    }
-
-    public static Matrix<Double> loadPolluteSpamBaseTrain(String regex) throws Exception {
-        String path = "data/spam_polluted/train_feature.txt";
-        ResourceFileReader reader = new ResourceFileReader();
-        File f = reader.read(path);
-        DoubleMatrixParser parser = new DoubleMatrixParser();
-        return parser.parse(f, regex);
-    }
-
-    public static Matrix<Double> loadPolluteSpamBaseTest(String regex) throws Exception {
-        String path = "data/spam_polluted/test_feature.txt";
-        ResourceFileReader reader = new ResourceFileReader();
-        File f = reader.read(path);
-        DoubleMatrixParser parser = new DoubleMatrixParser();
-        return parser.parse(f, regex);
-    }
-
     public static List<Double> loadLabel(String path) throws Exception {
         ResourceFileReader reader = new ResourceFileReader();
         File f = reader.read(path);
@@ -123,4 +67,40 @@ public class DatasetLoader {
         DoubleMatrixParser parser = new DoubleMatrixParser();
         return parser.parse(f, regex);
     }
+
+    public static Matrix<Double> loadBostonHousingTrain(String regex) throws Exception {
+        String path = "data/housing_train.txt";
+        return loadData(regex, path);
+    }
+
+    public static Matrix<Double> loadBostonHousingTest(String regex) throws Exception {
+        String path = "data/housing_test.txt";
+        return loadData(regex, path);
+    }
+
+    public static Matrix<Double> loadSpambase(String regex) throws Exception {
+        String path = "data/spambase.data";
+        return loadData(regex, path);
+    }
+
+    public static Matrix<Double> loadPerceptronData(String regex) throws Exception {
+        String path = "data/perceptronData.txt";
+        return loadData(regex, path);
+    }
+
+    public static Matrix<Double> loadTwoSpiralData(String regex) throws Exception {
+        String path = "data/twoSpirals.txt";
+        return loadData(regex, path);
+    }
+
+    public static Matrix<Double> loadPolluteSpamBaseTrain(String regex) throws Exception {
+        String path = "data/spam_polluted/train_feature.txt";
+        return loadData(regex, path);
+    }
+
+    public static Matrix<Double> loadPolluteSpamBaseTest(String regex) throws Exception {
+        String path = "data/spam_polluted/test_feature.txt";
+        return loadData(regex, path);
+    }
+
 }
