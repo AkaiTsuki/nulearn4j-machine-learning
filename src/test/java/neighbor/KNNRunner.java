@@ -1,12 +1,12 @@
 package neighbor;
 
-import org.nulearn4j.dataset.loader.DatasetLoader;
-import org.nulearn4j.dataset.matrix.Matrix;
-import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
-import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
-import org.nulearn4j.linear.DualPerceptron;
-import org.nulearn4j.neighbor.*;
-import org.nulearn4j.validation.Validation;
+import net.nulearn4j.dataset.loader.DatasetLoader;
+import net.nulearn4j.dataset.matrix.Matrix;
+import net.nulearn4j.dataset.preprocessing.normalization.Normalization;
+import net.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
+import net.nulearn4j.linear.DualPerceptron;
+import net.nulearn4j.neighbor.*;
+import net.nulearn4j.validation.Validation;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +15,34 @@ import java.util.List;
  * Created by jiachiliu on 12/3/14.
  */
 public class KNNRunner {
+
+    public static void twoSpiral() throws Exception {
+        Matrix<Double> train = DatasetLoader.loadTwoSpiralData("\\s+");
+        train.shuffle();
+
+        Matrix<Double>[] splits = train.split(train.getRowCount() / 10);
+        Matrix<Double> test = splits[0];
+        train = splits[1];
+
+        int label = train.getColumnCount() - 1;
+        List<Double> trainTarget = train.getColumn(label);
+        List<Double> testTarget = test.getColumn(label);
+        train = train.removeColumn(label);
+        test = test.removeColumn(label);
+
+        train = train.addColumn(0, 1.0);
+        test = test.addColumn(0, 1.0);
+
+        DualPerceptron perceptron = new DualPerceptron(new AbsoluteKernel(new GaussianKernel(9)));
+//        DualPerceptron perceptron = new DualPerceptron(new DotProductKernel());
+        perceptron.fit(train, trainTarget);
+        List<Double> predicts = perceptron.predict(test, train);
+//        System.out.println(predicts);
+//        System.out.println(testTarget);
+//        predicts = predicts.stream().map(p -> (p <= 0.3) ? -1.0 : 1.0).collect(Collectors.toList());
+//        Validation.ConfusionMatrix cm = Validation.confusionMatrix(predicts, testTarget);
+//        System.out.println("============== Test Performance==========\n" + cm);
+    }
 
     public static void dualPerceptron() throws Exception {
         Matrix<Double> train = DatasetLoader.loadPerceptronData("\t");
@@ -26,7 +54,6 @@ public class KNNRunner {
 
         DualPerceptron perceptron = new DualPerceptron(new DotProductKernel());
         perceptron.fit(train, trainTarget);
-
     }
 
     public static void digitalKDE(int size, Configuration config) throws Exception {
@@ -174,11 +201,12 @@ public class KNNRunner {
 //        spambase(7, config);
 //
         /* PB1-1 digital */
-//        config.set("type", "normal");
-//        config.set("kernel", Kernel.POLY);
+        config.set("type", "normal");
+        config.set("kernel", Kernel.GAUSSIAN);
+
 //        config.setDouble("degree", 2.0);
-//        config.setDouble("C", 2.0);
-//        digital(12000, 7, config);
+//        config.setDouble("C", 20.0);
+//        digital(12000, 1, config);
 
         /* PB2-1 Spambase */
 //        config.set("type", "window");
@@ -208,6 +236,7 @@ public class KNNRunner {
 //        digitalKDE(12000, config);
 
         dualPerceptron();
+//        twoSpiral();
 
         final long endTime = System.nanoTime();
         System.out.format("Total Run time: %f secs\n", 1.0 * (endTime - startTime) / 1e9);

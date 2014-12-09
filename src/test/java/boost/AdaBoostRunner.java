@@ -1,8 +1,8 @@
 package boost;
 
-import org.nulearn4j.boost.AdaBoost;
-import org.nulearn4j.dataset.loader.DatasetLoader;
-import org.nulearn4j.dataset.matrix.Matrix;
+import net.nulearn4j.boost.AdaBoost;
+import net.nulearn4j.dataset.loader.DatasetLoader;
+import net.nulearn4j.dataset.matrix.Matrix;
 
 import java.util.List;
 import java.util.stream.Collectors;

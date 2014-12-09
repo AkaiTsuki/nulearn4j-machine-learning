@@ -1,15 +1,14 @@
 package svm;
 
-import org.nulearn4j.classifier.Classifier;
-import org.nulearn4j.dataset.loader.DatasetLoader;
-import org.nulearn4j.dataset.matrix.Matrix;
-import org.nulearn4j.dataset.preprocessing.normalization.Normalization;
-import org.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
-import org.nulearn4j.multiclass.ECOC;
-import org.nulearn4j.multiclass.OneVsOne;
-import org.nulearn4j.multiclass.OneVsRest;
-import org.nulearn4j.svm.SMO;
-import org.nulearn4j.validation.Validation;
+import net.nulearn4j.classifier.Classifier;
+import net.nulearn4j.dataset.loader.DatasetLoader;
+import net.nulearn4j.dataset.matrix.Matrix;
+import net.nulearn4j.dataset.preprocessing.normalization.Normalization;
+import net.nulearn4j.dataset.preprocessing.normalization.ZeroMeanUnitVar;
+import net.nulearn4j.multiclass.ECOC;
+import net.nulearn4j.multiclass.OneVsOne;
+import net.nulearn4j.svm.SMO;
+import net.nulearn4j.validation.Validation;
 
 import java.util.Arrays;
 import java.util.List;
