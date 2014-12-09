@@ -1,6 +1,6 @@
 package net.nulearn4j.normalization;
 
-import net.nulearn4j.util.Statistic.DoubleListStatistic;
+import net.nulearn4j.util.StatisticUtil;
 import net.nulearn4j.core.matrix.Matrix;
 
 import java.util.ArrayList;
@@ -28,9 +28,9 @@ public class ZeroMeanUnitVar implements Normalization<Double> {
         // calculate means and variances
         for (int i = 0; i < n; i++) {
             List<Double> column = matrix.getColumn(i);
-            double mean = DoubleListStatistic.mean(column);
+            double mean = StatisticUtil.mean(column);
             means.add(mean);
-            stds.add(DoubleListStatistic.std(column, mean));
+            stds.add(StatisticUtil.std(column, mean));
         }
     }
 
